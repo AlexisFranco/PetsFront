@@ -1,25 +1,34 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, FlatList } from 'react-native';
+import { SafeAreaView, FlatList, Pressable, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { links } from '../linksClient';
 
 function Client() {
-  const navigation = useNavigation();
-  const links = [
-    {
-      'id': 1,
-    },
-    {
-      'id': 2,
-    },
-    {
-      'id': 3,
-    },
-  ]
+
   return (
     <SafeAreaView style={styles.container}>
+      <FlatList
+        data={links}
+        renderItem={({ item }) => (
+          <Pressable
+            style={styles.item}
+            onPress={() => alert(item.name)}
+            >
+            <Text>
+              <Ionicons name={item.icon} size={32} color="black" />
+            </Text>
+            <Text>{item.name}</Text>
+            <Text>
+              <Ionicons name="arrow-forward" size={24} color="black" />{' '}
+            </Text>
+          </Pressable>
 
+        )}
+
+        keyExtractor={(item) => item.id}
+      />
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -27,6 +36,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
+  },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   }
 });
 export default Client;
