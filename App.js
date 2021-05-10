@@ -1,23 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack'
 import Login from './screens/login';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accesible={false}>
-      <SafeAreaView style={styles.container}>
-        <Login />
-        <StatusBar style="auto" />
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Ingreso' component={Login}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-  },
-});
