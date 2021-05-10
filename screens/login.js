@@ -3,6 +3,7 @@ import {
   View,
   Button,
   TextInput,
+  StyleSheet
 } from 'react-native';
 
 function Login() {
@@ -16,19 +17,19 @@ function Login() {
   return (
     <View>
       <TextInput
-        placeholder="Ingresa tu correo electrónico"
+        style={styles.textInput}
+        placeholder="Correo electrónico"
         onChangeText={(text) => setEmail(text)}
         value={email}
-        textAlign="center"
         autoCapitalize="none"
         keyboardType="email-address"
         textContentType="emailAddress"
       />
       <TextInput
-        placeholder="Ingresa tu contraseña"
+        style={styles.textInput}
+        placeholder="Contraseña"
         onChangeText={(text) => setPassword(text)}
         value={password}
-        textAlign="center"
         textContentType="password"
         secureTextEntry
       />
@@ -36,5 +37,16 @@ function Login() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    height: 40,
+    borderColor: '#D9D4DC',
+    borderBottomWidth: 1,
+    marginBottom: 36,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+});
 
 export default Login;
