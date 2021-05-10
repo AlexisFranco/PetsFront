@@ -12,6 +12,7 @@ import {
   Button,
 } from 'react-native';
 
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +20,7 @@ function Login() {
   function handleSubmit() {
     axios({
       method: 'POST',
-      baseURL: 'http://192.168.10.12:8000',
+      baseURL: 'http://localhost:8000',
       url: '/users/signin',
       data: {
         email,
