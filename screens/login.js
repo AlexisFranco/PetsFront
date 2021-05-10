@@ -1,4 +1,8 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   StyleSheet,
   SafeAreaView,
@@ -8,13 +12,30 @@ import {
   Button,
 } from 'react-native';
 
-
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const navigation = useNavigation();
   function handleSubmit() {
-    alert(`${email} ${password}`)
+    axios({
+      method: 'POST',
+      baseURL: 'http://192.168.10.12:8000',
+      url: '/users/signin',
+      data: {
+        email,
+        password,
+      },
+    })
+      .then(({ data: {token, userType } }) => {
+        if(userType === 'client'){
+          AsyncStorage.setItem('token', token);
+          navigation.navigate('Inicio');
+
+        } else{
+          alert('Es un paseador')
+        }
+      })
+      .catch((error) => console.log(error));
   }
 
   return (
