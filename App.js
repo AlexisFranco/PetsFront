@@ -6,8 +6,6 @@ import Client from './screens/client';
 
 const Stack = createStackNavigator();
 
-const Stack = createStackNavigator();
-
 export default function App() {
   return (
     <NavigationContainer>

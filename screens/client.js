@@ -1,22 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView, FlatList } from 'react-native';
 
 function Client() {
-  const [token, setToken] = useState('');
-
-  useEffect(() => {
-    AsyncStorage.getItem('token')
-    .then((token) => {
-      setToken(token);
-    });
-  }, []);
-
+  const navigation = useNavigation();
+  const links = [
+    {
+      'id': 1,
+    },
+    {
+      'id': 2,
+    },
+    {
+      'id': 3,
+    },
+  ]
   return (
-    <SafeAreaView>
-      <Text>Hola Cliente</Text>
+    <SafeAreaView style={styles.container}>
+
     </SafeAreaView>
   )
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+  }
+});
 export default Client;
