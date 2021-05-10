@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import {
   View,
   Button,
   TextInput,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 function Login() {
@@ -11,7 +12,17 @@ function Login() {
   const [password, setPassword] = useState('');
 
   function handleSubmit() {
-    alert(`${email} ${password}`)
+    axios({
+      method: 'POST',
+      baseURL: 'http://localhost:8000',
+      url: '/users/signin',
+      data: {
+        email,
+        password,
+      },
+    })
+      .then(({ data }) => alert(data.token))
+      .catch(() => alert('Algo salió mal'))
   }
 
   return (
@@ -33,7 +44,7 @@ function Login() {
         textContentType="password"
         secureTextEntry
       />
-      <Button title="Ingresar" onPress={handleSubmit} />
+      <Button title="Ingresar" onPress={() => handleSubmit()} />
     </View>
   );
 }
