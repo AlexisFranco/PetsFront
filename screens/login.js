@@ -14,15 +14,15 @@ function Login() {
   function handleSubmit() {
     axios({
       method: 'POST',
-      baseURL: 'http://localhost:8000',
+      baseURL: 'http://192.168.10.12:8000',
       url: '/users/signin',
       data: {
         email,
         password,
       },
     })
-      .then(({ data }) => alert(data.token))
-      .catch(() => alert('Algo salió mal'))
+      .then(({ data }) => console.log(data.token))
+      .catch((error) => console.log(error));
   }
 
   return (
