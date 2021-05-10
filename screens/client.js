@@ -15,7 +15,6 @@ function Client() {
   return (
     <SafeAreaView>
       <Text>Hola Cliente</Text>
-      <Text>${token}</Text>
     </SafeAreaView>
   )
 }

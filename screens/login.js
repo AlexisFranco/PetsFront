@@ -33,8 +33,6 @@ function Login() {
 
         } else{
           alert('Es un paseador')
-          console.log(token);
-          console.log(userType);
         }
       })
       .catch((error) => console.log(error));
