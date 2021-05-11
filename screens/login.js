@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { REACT_NATIVE_SERVER_URL } from '@env';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -16,24 +17,25 @@ import {
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
+
   function handleSubmit() {
     axios({
       method: 'POST',
-      baseURL: 'http://localhost:8000',
+      baseURL: SERVER_URL,
       url: '/users/signin',
       data: {
         email,
         password,
       },
     })
-      .then(({ data: {token, userType } }) => {
-        if(userType === 'client'){
+      .then(({ data: { token, userType } }) => {
+        if (userType === 'client') {
           AsyncStorage.setItem('token', token);
           navigation.navigate('Inicio');
-
-        } else{
-          alert('Es un paseador')
+        } else {
+          alert('Es un paseador');
         }
       })
       .catch((error) => console.log(error));
