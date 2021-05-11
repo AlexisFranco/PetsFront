@@ -1,15 +1,14 @@
 import axios from 'axios';
-import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
   FlatList,
-  Pressable,
+  View,
   Text,
   StyleSheet,
 } from 'react-native';
-import { links } from '../linksClient';
+import { ListItemPet } from '../components/ListItemPet';
 
 function Client() {
   const [token, setToken] = useState('');
@@ -18,7 +17,6 @@ function Client() {
   useEffect(() => {
     AsyncStorage.getItem('token').then((token) => {
       setToken(token);
-      console.log(token);
 
       axios({
         method: 'GET',
@@ -29,28 +27,21 @@ function Client() {
         },
       })
         .then(({ data: { pets } }) => {
-          //setOwnPets(pets)
-          console.log(pets)
+          setOwnPets(pets)
         })
         .catch((error) => console.log(error));
     });
   }, [token]);
 
-
-  return (
+  return !!ownPets && (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={links}
+        data={ownPets}
         renderItem={({ item }) => (
-          <Pressable style={styles.item} onPress={() => alert(item.name)}>
-            <Text>
-              <Ionicons name={item.icon} size={32} color="black" />
-            </Text>
+          <View>
             <Text>{item.name}</Text>
-            <Text>
-              <Ionicons name="arrow-forward" size={24} color="black" />{' '}
-            </Text>
-          </Pressable>
+            <ListItemPet />
+          </View>
         )}
         keyExtractor={(item) => item.id}
       />
