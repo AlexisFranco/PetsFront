@@ -20,20 +20,19 @@ function Login() {
   function handleSubmit() {
     axios({
       method: 'POST',
-      baseURL: 'http://localhost:8000',
+      baseURL: 'http://192.168.10.12:8000',
       url: '/users/signin',
       data: {
         email,
         password,
       },
     })
-      .then(({ data: {token, userType } }) => {
-        if(userType === 'client'){
+      .then(({ data: { token, userType } }) => {
+        if (userType === 'client') {
           AsyncStorage.setItem('token', token);
           navigation.navigate('Inicio');
-
-        } else{
-          alert('Es un paseador')
+        } else {
+          alert('Es un paseador');
         }
       })
       .catch((error) => console.log(error));
