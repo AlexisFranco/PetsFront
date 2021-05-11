@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   FlatList,
@@ -6,14 +7,20 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+
 import { links } from '../../linksClient';
 
-export function ListItemPet(item) {
+export function ListItemPet(infoPet) {
+  const navigation = useNavigation();
+
   return (
     <FlatList
       data={links}
       renderItem={({ item }) => (
-        <Pressable style={styles.item} onPress={() => alert(item.name)}>
+        <Pressable
+          style={styles.item}
+          onPress={() => navigation.navigate( item.name, { infoPet: infoPet.infoPet } )}
+        >
           <Text>
             <Ionicons name={item.icon} size={32} color="black" />
           </Text>
@@ -25,7 +32,7 @@ export function ListItemPet(item) {
       )}
       keyExtractor={(item) => item.id}
     />
-  )
+  );
 }
 
 const styles = StyleSheet.create({
