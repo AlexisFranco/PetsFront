@@ -8,8 +8,7 @@ import {
 } from 'react-native';
 import { links } from '../../linksClient';
 
-export function ListItemPet() {
-
+export function ListItemPet(item) {
   return (
     <FlatList
       data={links}

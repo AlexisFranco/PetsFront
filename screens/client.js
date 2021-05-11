@@ -40,10 +40,10 @@ function Client() {
         renderItem={({ item }) => (
           <View>
             <Text>{item.name}</Text>
-            <ListItemPet />
+            <ListItemPet item={item}/>
           </View>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._rid}
       />
     </SafeAreaView>
   );
