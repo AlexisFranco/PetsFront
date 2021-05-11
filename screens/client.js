@@ -40,10 +40,10 @@ function Client() {
         renderItem={({ item }) => (
           <View>
             <Text>{item.name}</Text>
-            <ListItemPet item={item}/>
+            <ListItemPet infoPet={item}/>
           </View>
         )}
-        keyExtractor={(item) => item._rid}
+        keyExtractor={(item) => item._id}
       />
     </SafeAreaView>
   );
@@ -55,11 +55,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
   },
-  item: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
 });
+
 export default Client;
