@@ -17,11 +17,13 @@ import {
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
+
   function handleSubmit() {
     axios({
       method: 'POST',
-      baseURL: REACT_NATIVE_SERVER_URL,
+      baseURL: SERVER_URL,
       url: '/users/signin',
       data: {
         email,
