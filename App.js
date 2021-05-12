@@ -5,6 +5,7 @@ import Login from './screens/login';
 import Client from './screens/client';
 import InformationPet from './screens/informationPet';
 import InformationMedicine from './screens/informationMedicine';
+import InformationWalker from './screens/informationWalker';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name='Inicio' component={Client}/>
         <Stack.Screen name='Información' component={InformationPet}/>
         <Stack.Screen name='Medicinas' component={InformationMedicine}/>
+        <Stack.Screen name='Paseadores' component={InformationWalker}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
