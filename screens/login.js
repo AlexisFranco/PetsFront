@@ -30,12 +30,13 @@ function Login() {
         password,
       },
     })
-      .then(({ data: { token, userType } }) => {
+      .then(({ data: { token, userType, id } }) => {
         if (userType === 'client') {
           AsyncStorage.setItem('token', token);
           navigation.navigate('Inicio');
         } else {
-          alert('Es un paseador');
+          AsyncStorage.setItem('token', token);
+          navigation.navigate('Paseador', { id });
         }
       })
       .catch((error) => console.log(error));

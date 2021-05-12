@@ -5,7 +5,7 @@ import { SafeAreaView, Text, StyleSheet, FlatList, View } from 'react-native';
 function InformationMedicine() {
   const route = useRoute();
   const medicines = route.params.infoPet.medicineIDs;
-  console.log(medicines);
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
