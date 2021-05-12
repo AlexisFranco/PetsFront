@@ -5,7 +5,7 @@ import { SafeAreaView, Text, StyleSheet } from 'react-native';
 function InformationPet() {
   const route = useRoute();
   const pet = route.params.infoPet;
-  console.log(pet)
+
   return (
     <SafeAreaView style={styles.container}>
       <Text>{pet.name}</Text>
