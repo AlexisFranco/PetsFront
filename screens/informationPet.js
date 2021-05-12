@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRoute } from '@react-navigation/native';
-import { SafeAreaView, FlatList, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
 
 function InformationPet() {
   const route = useRoute();

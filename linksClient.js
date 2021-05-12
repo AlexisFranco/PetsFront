@@ -12,6 +12,6 @@ export const links = [
   {
     id: '3',
     icon: 'ios-walk-outline',
-    name: 'paseadores',
+    name: 'Paseadores',
   },
 ];
