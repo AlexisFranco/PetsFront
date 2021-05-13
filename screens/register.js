@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { REACT_NATIVE_SERVER_URL } from '@env';
 import { useNavigation } from '@react-navigation/native';
+import RNPickerSelect from 'react-native-picker-select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
@@ -11,14 +12,15 @@ import {
   Keyboard,
   TextInput,
   Button,
-  Pressable,
-  Text,
 } from 'react-native';
 
-
-function Login() {
+function Register() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
+  const [selectedTypeUser, setSelectedTypeUser] = useState('');
+
   const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
 
@@ -26,31 +28,37 @@ function Login() {
     axios({
       method: 'POST',
       baseURL: SERVER_URL,
-      url: '/users/signin',
+      url: `/${selectedTypeUser}`,
       data: {
+        name,
         email,
         password,
+        phoneNum,
       },
     })
-      .then(({ data: { token, userType, id } }) => {
+      .then(({ data: { token, userType, userID } }) => {
         if (userType === 'client') {
           AsyncStorage.setItem('token', token);
           navigation.navigate('Inicio');
         } else {
+          console.log(userID)
           AsyncStorage.setItem('token', token);
-          navigation.navigate('Paseador', { id });
+          navigation.navigate('Paseador', { userID });
         }
       })
-      .catch((error) => console.log(error));
-  }
-
-  function handleRegister(){
-    navigation.navigate('Registro');
+      .catch((error) => console.dir(error));
   }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accesible={false}>
       <SafeAreaView style={styles.container}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Nombre Completo"
+          onChangeText={(text) => setName(text)}
+          value={name}
+          autoCapitalize="none"
+        />
         <TextInput
           style={styles.textInput}
           placeholder="Correo electrónico"
@@ -68,8 +76,25 @@ function Login() {
           textContentType="password"
           secureTextEntry
         />
-        <Button title="Ingresar" onPress={handleSubmit} />
-        <Button title="Registrarse" onPress={handleRegister} />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Teléfono"
+          onChangeText={(text) => setPhoneNum(text)}
+          value={phoneNum}
+          keyboardType="numeric"
+        />
+        <RNPickerSelect
+          onValueChange={(value) => setSelectedTypeUser(value)}
+          placeholder={{
+            label: 'Selecciona tu usuario',
+            value: null,
+          }}
+          items={[
+            { label: 'Usuario', value: 'clients' },
+            { label: 'Paseador', value: 'walkers' },
+          ]}
+        />
+        <Button title="Registrarse" onPress={handleSubmit} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -91,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;
