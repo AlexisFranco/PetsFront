@@ -44,6 +44,10 @@ function Login() {
       .catch((error) => console.log(error));
   }
 
+  function handleRegister(){
+    navigation.navigate('Registro');
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accesible={false}>
       <SafeAreaView style={styles.container}>
@@ -65,7 +69,7 @@ function Login() {
           secureTextEntry
         />
         <Button title="Ingresar" onPress={handleSubmit} />
-        <Button title="Ingresar" onPress={navigation.navigate('Registro')} />
+        <Button title="Registrarse" onPress={handleRegister} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

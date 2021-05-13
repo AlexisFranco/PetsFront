@@ -8,7 +8,7 @@ function Walker() {
   const [token, setToken] = useState('');
   const [walker, setWalker] = useState([]);
   const route = useRoute();
-  const idWalker = route.params.id;
+  const idWalker = route.params.userID;
 
     useEffect(() => {
       AsyncStorage.getItem('token').then((token) => {
