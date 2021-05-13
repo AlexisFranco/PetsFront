@@ -11,42 +11,30 @@ import {
   Keyboard,
   TextInput,
   Button,
-  Pressable,
-  Text,
 } from 'react-native';
 
-
-function Login() {
+function Register() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState(0);
   const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
 
   function handleSubmit() {
-    axios({
-      method: 'POST',
-      baseURL: SERVER_URL,
-      url: '/users/signin',
-      data: {
-        email,
-        password,
-      },
-    })
-      .then(({ data: { token, userType, id } }) => {
-        if (userType === 'client') {
-          AsyncStorage.setItem('token', token);
-          navigation.navigate('Inicio');
-        } else {
-          AsyncStorage.setItem('token', token);
-          navigation.navigate('Paseador', { id });
-        }
-      })
-      .catch((error) => console.log(error));
+
   }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accesible={false}>
       <SafeAreaView style={styles.container}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Nombre Completo"
+          onChangeText={(text) => setName(text)}
+          value={name}
+          autoCapitalize="none"
+        />
         <TextInput
           style={styles.textInput}
           placeholder="Correo electrónico"
@@ -64,8 +52,14 @@ function Login() {
           textContentType="password"
           secureTextEntry
         />
-        <Button title="Ingresar" onPress={handleSubmit} />
-        <Button title="Ingresar" onPress={navigation.navigate('Registro')} />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Teléfono"
+          onChangeText={(num) => setPhone(num)}
+          value={phone}
+          keyboardType="numeric"
+        />
+        <Button title="Registrarse" onPress={handleSubmit} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -87,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;

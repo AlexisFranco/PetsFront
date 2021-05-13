@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import Login from './screens/login';
 import Client from './screens/client';
 import Walker from './screens/walker';
+import Register from './screens/register';
 import InformationPet from './screens/informationPet';
 import InformationClient from './screens/informationClient';
 import InformationWalker from './screens/informationWalker';
@@ -17,6 +18,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name='Ingreso' component={ Login }/>
+        <Stack.Screen name='Registro' component={ Register }/>
         <Stack.Screen name='Inicio' component={ Client }/>
         <Stack.Screen name='Información' component={ InformationClient }/>
         <Stack.Screen name='Paseador' component={ Walker }/>
