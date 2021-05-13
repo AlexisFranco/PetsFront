@@ -2,7 +2,7 @@ export const links = [
   {
     id: '1',
     icon: 'information',
-    name: 'Información',
+    name: 'Mascota',
   },
   {
     id: '2',

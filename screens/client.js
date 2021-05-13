@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
@@ -7,12 +8,15 @@ import {
   View,
   Text,
   StyleSheet,
+  Pressable,
 } from 'react-native';
 import { ListItemPet } from '../components/ListItemPet';
 
 function Client() {
   const [token, setToken] = useState('');
+  const [client, setClient] = useState({})
   const [ownPets, setOwnPets] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     AsyncStorage.getItem('token').then((token) => {
@@ -21,13 +25,14 @@ function Client() {
       axios({
         method: 'GET',
         baseURL: 'http://192.168.10.12:8000',
-        url: '/pets',
+        url: '/clients',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(({ data: { pets } }) => {
-          setOwnPets(pets)
+        .then(({ data: {client} }) => {
+          setClient(client)
+          setOwnPets(client.petIDs)
         })
         .catch((error) => console.log(error));
     });
@@ -35,6 +40,12 @@ function Client() {
 
   return !!ownPets && (
     <SafeAreaView style={styles.container}>
+      <Pressable
+        style={styles.item}
+        onPress={() => navigation.navigate('Información', {client})}
+      >
+        <Text>Información</Text>
+      </Pressable>
       <FlatList
         data={ownPets}
         renderItem={({ item }) => (
