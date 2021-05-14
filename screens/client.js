@@ -9,6 +9,7 @@ import {
   Text,
   StyleSheet,
   Pressable,
+  Button,
 } from 'react-native';
 import { ListItemPet } from '../components/ListItemPet';
 
@@ -17,6 +18,10 @@ function Client() {
   const [client, setClient] = useState({})
   const [ownPets, setOwnPets] = useState([]);
   const navigation = useNavigation();
+
+  function handleCreate() {
+    navigation.navigate('Crear Mascota');
+  }
 
   useEffect(() => {
     AsyncStorage.getItem('token').then((token) => {
@@ -38,25 +43,28 @@ function Client() {
     });
   }, [token]);
 
-  return !!ownPets && (
-    <SafeAreaView style={styles.container}>
-      <Pressable
-        style={styles.item}
-        onPress={() => navigation.navigate('Información', {client})}
-      >
-        <Text>Información</Text>
-      </Pressable>
-      <FlatList
-        data={ownPets}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item.name}</Text>
-            <ListItemPet infoPet={item}/>
-          </View>
-        )}
-        keyExtractor={(item) => item._id}
-      />
-    </SafeAreaView>
+  return (
+    !!ownPets && (
+      <SafeAreaView style={styles.container}>
+        <Pressable
+          style={styles.item}
+          onPress={() => navigation.navigate('Información', { client })}
+        >
+          <Text>Información</Text>
+        </Pressable>
+        <FlatList
+          data={ownPets}
+          renderItem={({ item }) => (
+            <View>
+              <Text>{item.name}</Text>
+              <ListItemPet infoPet={item} />
+            </View>
+          )}
+          keyExtractor={(item) => item._id}
+        />
+        <Button title="Agregar mascota" onPress={handleCreate} />
+      </SafeAreaView>
+    )
   );
 }
 
