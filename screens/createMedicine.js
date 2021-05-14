@@ -1,12 +1,13 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { REACT_NATIVE_SERVER_URL } from '@env';
 import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useRoute } from '@react-navigation/native';
 
 import {
   StyleSheet,
@@ -18,17 +19,20 @@ import {
   Text,
 } from 'react-native';
 
-function CreatePet() {
+function CreateMedicine() {
   const [token, setToken] = useState('');
   const [name, setName] = useState('');
-  const [whatPet, setWhatPet] = useState('');
-  const [dateBirth, setDateBirth] = useState('');
-  const [weight, setWeight] = useState('');
-  const [idealWeight, setIdealWeight] = useState('');
-  const [breed, setBreed] = useState('');
+  const [whatMedicine, setWhatMedicine] = useState('');
+  const [dose, setDose] = useState('');
+  const [initDate, setInitDate] = useState('');
+  const [initHour, setInitHour] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [repetition, setRepetition] = useState('');
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const date = new Date();
+  const route = useRoute();
+  const petID = route.params.idPet;
+
   const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
 
@@ -39,71 +43,85 @@ function CreatePet() {
   }, [token]);
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || dateBirth;
+    const currentDate = selectedDate || initDate;
     setShow(Platform.OS === 'ios');
     const dateFormat = format(currentDate, 'P', { locale: es });
-    setDateBirth(dateFormat);
+    const hour = currentDate.getHours() + ':' + currentDate.getMinutes();
+    mode === 'date' ? setInitDate(dateFormat) : setInitHour(hour);
+  };
+
+  const showMode = (currentMode) => {
+    setShow((prevShow) => !prevShow);
+    setMode(currentMode);
   };
 
   const showDatepicker = () => {
-    setShow((prevShow) => !prevShow);
-    setMode('date');
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
   };
 
   function handleSubmit() {
+    console.log(name, whatMedicine, dose, initDate, initHour, repetition, petID);
     axios({
       method: 'POST',
       baseURL: SERVER_URL,
-      url: 'pets',
+      url: 'medicines',
       data: {
         name,
-        whatPet,
-        dateBirth,
-        weight,
-        idealWeight,
-        breed,
+        whatMedicine,
+        dose,
+        initHour,
+        initDate,
+        repetition,
+        petID,
       },
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then(({ data }) => {
-          console.log(data)
+        console.log(data);
       })
       .catch((error) => console.dir(error));
   }
+
   return (
     <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss;
-        setShow(false);
-      }}
-      accesible={false}
-    >
+      onPress={Keyboard.dismiss} accesible={false} >
       <SafeAreaView style={styles.container}>
         <TextInput
           style={styles.textInput}
-          placeholder="Nombre de tu mascota"
+          placeholder="Nombre del medicamento"
           onChangeText={(text) => setName(text)}
           value={name}
           autoCapitalize="none"
         />
         <RNPickerSelect
-          onValueChange={(value) => setWhatPet(value)}
+          onValueChange={(value) => setWhatMedicine(value)}
           placeholder={{
-            label: 'Selecciona que tipo de mascota tienes',
+            label: 'Selecciona el tipo de medicina',
             value: null,
           }}
           items={[
-            { label: 'Perro/a', value: 'Dog' },
-            { label: 'Gato/a', value: 'Cat' },
+            { label: 'Vacuna', value: 'Vacuna' },
+            { label: 'Desparasitante', value: 'Desparasitante' },
+            { label: 'Medicina', value: 'Medicina' },
           ]}
         />
-        <Text>{dateBirth}</Text>
-        <Button
-          onPress={showDatepicker}
-          title="Ingresa la fecha de nacimiento de tu mascota"
+        <TextInput
+          style={styles.textInput}
+          placeholder="Dosis (2 tabletas / 10 mg)"
+          onChangeText={(text) => setDose(text)}
+          value={dose}
+          autoCapitalize="none"
         />
+        <Button onPress={showDatepicker} title="Fecha de inicio" />
+        <Button onPress={showTimepicker} title="Hora de la primera dosis" />
+        <Text>{initDate}</Text>
+        <Text>{initHour}</Text>
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -116,26 +134,12 @@ function CreatePet() {
         )}
         <TextInput
           style={styles.textInput}
-          placeholder="Peso actual de tu mascota"
-          onChangeText={(text) => setWeight(text)}
-          value={weight}
-          keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Peso ideal de tu mascota"
-          onChangeText={(text) => setIdealWeight(text)}
-          value={idealWeight}
-          keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="Raza de tu mascota"
-          onChangeText={(text) => setBreed(text)}
-          value={breed}
+          placeholder="Repetition"
+          onChangeText={(text) => setRepetition(text)}
+          value={repetition}
           autoCapitalize="none"
         />
-        <Button title="Agregar mascosta" onPress={handleSubmit} />
+        <Button title="Agregar medicina" onPress={handleSubmit} />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -156,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatePet;
+export default CreateMedicine;
