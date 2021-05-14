@@ -64,7 +64,6 @@ function CreateMedicine() {
   };
 
   function handleSubmit() {
-    console.log(name, whatMedicine, dose, initDate, initHour, repetition, petID);
     axios({
       method: 'POST',
       baseURL: SERVER_URL,
@@ -83,7 +82,7 @@ function CreateMedicine() {
       },
     })
       .then(({ data }) => {
-        console.log(data);
+        navigation.navigate('Inicio');
       })
       .catch((error) => console.dir(error));
   }
