@@ -41,7 +41,6 @@ function Register() {
           AsyncStorage.setItem('token', token);
           navigation.navigate('Inicio');
         } else {
-          console.log(userID)
           AsyncStorage.setItem('token', token);
           navigation.navigate('Paseador', { userID });
         }
