@@ -19,10 +19,6 @@ function Client() {
   const [ownPets, setOwnPets] = useState([]);
   const navigation = useNavigation();
 
-  function handleCreate() {
-    navigation.navigate('Crear Mascota');
-  }
-
   useEffect(() => {
     AsyncStorage.getItem('token').then((token) => {
       setToken(token);
@@ -41,7 +37,7 @@ function Client() {
         })
         .catch((error) => console.log(error));
     });
-  }, [token]);
+  }, []);
 
   return (
     !!ownPets && (
@@ -62,7 +58,10 @@ function Client() {
           )}
           keyExtractor={(item) => item._id}
         />
-        <Button title="Agregar mascota" onPress={handleCreate} />
+        <Button
+          title="Agregar mascota"
+          onPress={() => navigation.navigate('Crear Mascota')}
+        />
       </SafeAreaView>
     )
   );
