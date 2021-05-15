@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useDispatch } from 'react-redux';
+import { createPet } from '../store/petsReducer';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
@@ -31,6 +33,8 @@ function CreatePet() {
   const date = new Date();
   const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     AsyncStorage.getItem('token').then((token) => {
@@ -51,27 +55,19 @@ function CreatePet() {
   };
 
   function handleSubmit() {
-    axios({
-      method: 'POST',
-      baseURL: SERVER_URL,
-      url: 'pets',
-      data: {
+    dispatch(
+      createPet(
         name,
         whatPet,
         dateBirth,
         weight,
         idealWeight,
         breed,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(({ data }) => {
-        navigation.navigate('Inicio');
-      })
-      .catch((error) => console.dir(error));
+        navigation,
+      )
+    );
   }
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
