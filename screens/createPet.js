@@ -1,14 +1,11 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { REACT_NATIVE_SERVER_URL } from '@env';
-import { useNavigation } from '@react-navigation/native';
-import RNPickerSelect from 'react-native-picker-select';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { useDispatch } from 'react-redux';
-import { createPet } from '../store/petsReducer';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import RNPickerSelect from 'react-native-picker-select';
+import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { createPet } from '../store/petsReducer';
 
 import {
   StyleSheet,
@@ -21,26 +18,17 @@ import {
 } from 'react-native';
 
 function CreatePet() {
-  const [token, setToken] = useState('');
   const [name, setName] = useState('');
+  const [breed, setBreed] = useState('');
+  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date');
+  const [weight, setWeight] = useState('');
   const [whatPet, setWhatPet] = useState('');
   const [dateBirth, setDateBirth] = useState('');
-  const [weight, setWeight] = useState('');
   const [idealWeight, setIdealWeight] = useState('');
-  const [breed, setBreed] = useState('');
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
   const date = new Date();
-  const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    AsyncStorage.getItem('token').then((token) => {
-      setToken(token);
-    });
-  }, [token]);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || dateBirth;

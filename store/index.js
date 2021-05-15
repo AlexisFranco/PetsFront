@@ -1,7 +1,8 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { usersReducer } from './usersReducer';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { petsReducer } from './petsReducer';
+import { usersReducer } from './usersReducer';
+import { medicinesReducer } from './medicinesReducer';
 
 const middleware = [
   thunk
@@ -10,6 +11,7 @@ const middleware = [
 const rootReducer = combineReducers({
   usersReducer,
   petsReducer,
+  medicinesReducer,
 });
 
 export const store = createStore(
