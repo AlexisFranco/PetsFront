@@ -64,7 +64,6 @@ function CreateMedicine() {
   };
 
   function handleSubmit() {
-    console.log(name, whatMedicine, dose, initDate, initHour, repetition, petID);
     axios({
       method: 'POST',
       baseURL: SERVER_URL,
