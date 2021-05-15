@@ -9,10 +9,6 @@ function InformationMedicine() {
   const idPet = route.params.infoPet._id;
   const navigation = useNavigation();
 
-  function handleCreate() {
-    navigation.navigate('Crear Medicina', { idPet });
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -30,7 +26,10 @@ function InformationMedicine() {
         )}
         keyExtractor={(item) => item._id}
       />
-      <Button title="Agregar medicina" onPress={handleCreate} />
+      <Button
+        title="Agregar medicina"
+        onPress={() => navigation.navigate('Crear Medicina', { idPet })}
+      />
     </SafeAreaView>
   );
 }

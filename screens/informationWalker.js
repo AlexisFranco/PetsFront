@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { SafeAreaView, Text, StyleSheet, FlatList, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView, Text, StyleSheet, FlatList, View, Button } from 'react-native';
 
 function InformationWalker() {
-  const [walkers, setWalkers] = useState([])
+  const route = useRoute();
+  const [walkers, setWalkers] = useState([]);
+  const navigation = useNavigation();
+
   useEffect(() => {
     axios({
       method: 'GET',
@@ -25,7 +30,16 @@ function InformationWalker() {
             <Text>{item.phoneNum}</Text>
             <Text>{item.cost}</Text>
             <Text>{item.zone}</Text>
+            <Button
+              title="Solicita un paseo para tu mascota"
+              onPress={() => navigation.navigate('Crear Paseo', {
+                petID: route.params.infoPet._id,
+                walkerID: item._id,
+                cost: item.cost
+              })}
+            />
           </View>
+
         )}
         keyExtractor={(item) => item._id}
       />
