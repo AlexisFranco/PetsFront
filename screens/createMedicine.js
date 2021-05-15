@@ -82,7 +82,7 @@ function CreateMedicine() {
       },
     })
       .then(({ data }) => {
-        console.log(data);
+        navigation.navigate('Inicio');
       })
       .catch((error) => console.dir(error));
   }

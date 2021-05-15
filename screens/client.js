@@ -37,7 +37,7 @@ function Client() {
         })
         .catch((error) => console.log(error));
     });
-  }, [token]);
+  }, []);
 
   return (
     !!ownPets && (
