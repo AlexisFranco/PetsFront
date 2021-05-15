@@ -19,19 +19,19 @@ import {
 } from 'react-native';
 
 function CreateService() {
-  const [token, setToken] = useState('');
-  const [initLoc, setInitLoc] = useState('');
   const [date, setDate] = useState('');
   const [hour, setHour] = useState('');
   const [time, setTime] = useState('');
   const [cost, setCost] = useState('');
-  const [mode, setMode] = useState('date');
+  const [token, setToken] = useState('');
   const [show, setShow] = useState(false);
-  const dateTime = new Date();
+  const [mode, setMode] = useState('date');
+  const [initLoc, setInitLoc] = useState('');
   const route = useRoute();
+  const dateTime = new Date();
   const petID = route.params.petID;
-  const walkerID = route.params.walkerID;
   const costHour = route.params.cost;
+  const walkerID = route.params.walkerID;
   const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
 
@@ -64,8 +64,6 @@ function CreateService() {
 
 
   function handleSubmit() {
-    console.log(time*costHour)
-    console.log(initLoc, time, hour, date, petID, walkerID)
     axios({
       method: 'POST',
       baseURL: SERVER_URL,
@@ -84,7 +82,7 @@ function CreateService() {
       },
     })
       .then(({ data }) => {
-        console.log(data);
+        navigation.navigate('Inicio');
       })
       .catch((error) => console.dir(error));
   }
