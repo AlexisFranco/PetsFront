@@ -1,9 +1,8 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { REACT_NATIVE_SERVER_URL } from '@env';
-import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import RNPickerSelect from 'react-native-picker-select';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { createUser } from '../store/usersReducer';
 
 import {
   StyleSheet,
@@ -20,32 +19,20 @@ function Register() {
   const [password, setPassword] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [selectedTypeUser, setSelectedTypeUser] = useState('');
-
-  const SERVER_URL = REACT_NATIVE_SERVER_URL;
+  const dispatch = useDispatch();
   const navigation = useNavigation();
 
   function handleSubmit() {
-    axios({
-      method: 'POST',
-      baseURL: SERVER_URL,
-      url: `/${selectedTypeUser}`,
-      data: {
+    dispatch(
+      createUser(
         name,
         email,
         password,
         phoneNum,
-      },
-    })
-      .then(({ data: { token, userType, userID } }) => {
-        if (userType === 'client') {
-          AsyncStorage.setItem('token', token);
-          navigation.navigate('Inicio');
-        } else {
-          AsyncStorage.setItem('token', token);
-          navigation.navigate('Paseador', { userID });
-        }
-      })
-      .catch((error) => console.dir(error));
+        selectedTypeUser,
+        navigation
+      )
+    );
   }
 
   return (
