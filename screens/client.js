@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../store/usersReducer';
+import { getClient } from '../store/usersReducer';
 import { getPets } from '../store/petsReducer';
 
 import {
@@ -27,7 +27,7 @@ function Client() {
   }));
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getClient());
     dispatch(getPets());
   }, [pets.length]);
 
