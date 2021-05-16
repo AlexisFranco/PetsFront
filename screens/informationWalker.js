@@ -3,20 +3,21 @@ import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, Text, StyleSheet, FlatList, View, Button } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { getWalkers } from '../store/usersReducer';
 
 function InformationWalker() {
   const route = useRoute();
-  const [walkers, setWalkers] = useState([]);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios({
-      method: 'GET',
-      baseURL: 'http://192.168.1.62:8000',
-      url: '/walkers',
+  const { walkers } = useSelector(
+    ({ usersReducer }) => ({
+      walkers: usersReducer.walkers,
     })
-      .then(({ data: { walkers } }) => setWalkers(walkers))
-      .catch((error) => console.log(error));
+  );
+  useEffect(() => {
+    dispatch(getWalkers());
   }, []);
 
   return (
