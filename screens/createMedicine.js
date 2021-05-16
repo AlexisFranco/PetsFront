@@ -1,13 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { REACT_NATIVE_SERVER_URL } from '@env';
-import { useNavigation } from '@react-navigation/native';
-import RNPickerSelect from 'react-native-picker-select';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/native';
+import RNPickerSelect from 'react-native-picker-select';
+import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { createMedicine } from '../store/medicinesReducer';
 
 import {
   StyleSheet,
@@ -20,27 +19,19 @@ import {
 } from 'react-native';
 
 function CreateMedicine() {
-  const [token, setToken] = useState('');
   const [name, setName] = useState('');
-  const [whatMedicine, setWhatMedicine] = useState('');
   const [dose, setDose] = useState('');
+  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date');
   const [initDate, setInitDate] = useState('');
   const [initHour, setInitHour] = useState('');
   const [date, setDate] = useState(new Date());
   const [repetition, setRepetition] = useState('');
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const [whatMedicine, setWhatMedicine] = useState('');
   const route = useRoute();
+  const dispatch = useDispatch();
   const petID = route.params.idPet;
-
-  const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
-
-  useEffect(() => {
-    AsyncStorage.getItem('token').then((token) => {
-      setToken(token);
-    });
-  }, [token]);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || initDate;
@@ -64,11 +55,8 @@ function CreateMedicine() {
   };
 
   function handleSubmit() {
-    axios({
-      method: 'POST',
-      baseURL: SERVER_URL,
-      url: 'medicines',
-      data: {
+    dispatch(
+      createMedicine(
         name,
         whatMedicine,
         dose,
@@ -76,15 +64,9 @@ function CreateMedicine() {
         initDate,
         repetition,
         petID,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(({ data }) => {
-        navigation.navigate('Inicio');
-      })
-      .catch((error) => console.dir(error));
+        navigation,
+      )
+    );
   }
 
   return (

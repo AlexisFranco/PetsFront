@@ -12,10 +12,10 @@ function InformationWalker() {
   useEffect(() => {
     axios({
       method: 'GET',
-      baseURL: 'http://192.168.10.12:8000',
+      baseURL: 'http://192.168.1.62:8000',
       url: '/walkers',
     })
-      .then(({ data: {walkers} }) => setWalkers(walkers))
+      .then(({ data: { walkers } }) => setWalkers(walkers))
       .catch((error) => console.log(error));
   }, []);
 
