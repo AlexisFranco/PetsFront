@@ -1,9 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { REACT_NATIVE_SERVER_URL } from '@env';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { loginUser } from '../store/usersReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   StyleSheet,
   SafeAreaView,
@@ -11,39 +9,25 @@ import {
   Keyboard,
   TextInput,
   Button,
-  Pressable,
-  Text,
+  ActivityIndicator,
 } from 'react-native';
 
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const { loading } = useSelector(({ usersReducer }) => ({
+    loading: usersReducer.loading,
+  }))
 
   function handleSubmit() {
-    axios({
-      method: 'POST',
-      baseURL: SERVER_URL,
-      url: '/users/signin',
-      data: {
-        email,
-        password,
-      },
-    })
-      .then(({ data: { token, userType, id } }) => {
-        if (userType === 'client') {
-          AsyncStorage.setItem('token', token);
-          navigation.navigate('Inicio');
-        } else {
-          AsyncStorage.setItem('token', token);
-          navigation.navigate('Paseador', { id });
-        }
-      })
-      .catch((error) => console.log(error));
+    dispatch(loginUser(email, password, navigation));
   }
 
+  if (loading) return <ActivityIndicator />;
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accesible={false}>
       <SafeAreaView style={styles.container}>

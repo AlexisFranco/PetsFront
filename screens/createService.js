@@ -1,12 +1,11 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { REACT_NATIVE_SERVER_URL } from '@env';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRoute } from '@react-navigation/native';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { createService } from '../store/servicesReducer';
 
 import {
   StyleSheet,
@@ -32,14 +31,9 @@ function CreateService() {
   const petID = route.params.petID;
   const costHour = route.params.cost;
   const walkerID = route.params.walkerID;
-  const SERVER_URL = REACT_NATIVE_SERVER_URL;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    AsyncStorage.getItem('token').then((token) => {
-      setToken(token);
-    });
-  }, [token]);
 
     const onChange = (event, selectedDate) => {
       const currentDate = selectedDate || initDate;
@@ -64,11 +58,8 @@ function CreateService() {
 
 
   function handleSubmit() {
-    axios({
-      method: 'POST',
-      baseURL: SERVER_URL,
-      url: 'services',
-      data: {
+    dispatch(
+      createService(
         initLoc,
         time,
         cost,
@@ -76,15 +67,9 @@ function CreateService() {
         date,
         petID,
         walkerID,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(({ data }) => {
-        navigation.navigate('Inicio');
-      })
-      .catch((error) => console.dir(error));
+        navigation,
+      )
+    )
   }
 
   return (

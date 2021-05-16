@@ -1,46 +1,34 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRoute } from '@react-navigation/native';
-import { SafeAreaView, FlatList, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, FlatList, View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { getWalker } from '../store/usersReducer';
 
 function Walker() {
-  const [token, setToken] = useState('');
-  const [walker, setWalker] = useState([]);
   const route = useRoute();
-  const idWalker = route.params.userID;
+  const idWalker = route.params.id;
+  const dispatch = useDispatch()
 
-    useEffect(() => {
-      AsyncStorage.getItem('token').then((token) => {
-        setToken(token);
+  const { loading, walker } = useSelector(
+    ({ usersReducer }) => ({
+      walker: usersReducer.walker,
+      loading: usersReducer.loading,
+    })
+  );
 
-        axios({
-          method: 'GET',
-          baseURL: 'http://192.168.10.12:8000',
-          url: `/walkers?_id=${idWalker}`,
-        })
-          .then(({ data: { walkers } }) => {
-            setWalker(walkers);
-          })
-          .catch((error) => console.log(error));
-      });
-    }, [token]);
+  useEffect(() => {
+    dispatch(getWalker(idWalker))
+  }, []);
 
+  if (loading) return <ActivityIndicator />;
   return (
     !!walker && (
       <SafeAreaView style={styles.container}>
-        <FlatList
-          data={walker}
-          renderItem={({ item }) => (
-            <View>
-              <Text>{item.name}</Text>
-              <Text>{item.email}</Text>
-              <Text>{item.phoneNum}</Text>
-              <Text>{item.zone}</Text>
-            </View>
-          )}
-          keyExtractor={(item) => item._id}
-        />
+        <Text>{walker.name}</Text>
+        <Text>{walker.email}</Text>
+        <Text>{walker.phoneNum}</Text>
+        <Text>{walker.zone}</Text>
       </SafeAreaView>
     )
   );

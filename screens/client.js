@@ -1,7 +1,9 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClient } from '../store/usersReducer';
+import { getPets } from '../store/petsReducer';
+
 import {
   SafeAreaView,
   FlatList,
@@ -10,37 +12,28 @@ import {
   StyleSheet,
   Pressable,
   Button,
+  ActivityIndicator,
 } from 'react-native';
 import { ListItemPet } from '../components/ListItemPet';
 
 function Client() {
-  const [token, setToken] = useState('');
-  const [client, setClient] = useState({})
-  const [ownPets, setOwnPets] = useState([]);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const { loading, client, pets } = useSelector(({ usersReducer, petsReducer }) => ({
+    client: usersReducer.client,
+    pets: petsReducer.pets,
+    loading: usersReducer.loading,
+  }));
 
   useEffect(() => {
-    AsyncStorage.getItem('token').then((token) => {
-      setToken(token);
+    dispatch(getClient());
+    dispatch(getPets());
+  }, [pets.length]);
 
-      axios({
-        method: 'GET',
-        baseURL: 'http://192.168.10.12:8000',
-        url: '/clients',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then(({ data: {client} }) => {
-          setClient(client)
-          setOwnPets(client.petIDs)
-        })
-        .catch((error) => console.log(error));
-    });
-  }, []);
-
+  if (loading) return <ActivityIndicator />;
   return (
-    !!ownPets && (
+    !!pets && (
       <SafeAreaView style={styles.container}>
         <Pressable
           style={styles.item}
@@ -49,7 +42,7 @@ function Client() {
           <Text>Información</Text>
         </Pressable>
         <FlatList
-          data={ownPets}
+          data={pets}
           renderItem={({ item }) => (
             <View>
               <Text>{item.name}</Text>
