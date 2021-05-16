@@ -21,7 +21,7 @@ export function createUser(
   return async function (dispatch) {
     dispatch({ type: USERS_LOADING });
     try {
-      const { data: { token, userType, id } } = await axios({
+      const { data: { token, userType, userID } } = await axios({
         method: 'POST',
         baseURL: SERVER_URL,
         url: `/${selectedTypeUser}`,
@@ -36,7 +36,7 @@ export function createUser(
 
       userType === 'client'
         ? navigation.navigate('Inicio')
-        : navigation.navigate('Paseador', { id });
+        : navigation.navigate('Paseador', { id: userID });
 
       dispatch({ type: USERS_SUCCESS });
     } catch (error) {
@@ -121,7 +121,6 @@ export function getWalkers() {
         baseURL: SERVER_URL,
         url: '/walkers',
       });
-
       dispatch({ type: USERS_WALKERS_SUCCESS, payload: walkers });
     } catch(error) {
         alert('Intenta nuevamente ingresar');
@@ -165,7 +164,7 @@ export function usersReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        ...action.payload,
+        walkers: action.payload,
       };
     default:
       return state;
