@@ -3,35 +3,35 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { REACT_NATIVE_SERVER_URL } from '@env';
 const SERVER_URL = REACT_NATIVE_SERVER_URL;
 
-const MEDICINES_LOADING = 'MEDICINES_LOADING';
-const MEDICINES_CREATED = 'MEDICINES_CREATED';
+const SERVICES_LOADING = 'SERVICES_LOADING';
+const SERVICES_CREATED = 'SERVICES_CREATED';
 
-export function createMedicine(
-  name,
-  whatMedicine,
-  dose,
-  initHour,
-  initDate,
-  repetition,
+export function createService(
+  initLoc,
+  time,
+  cost,
+  hour,
+  date,
   petID,
-  navigation,
+  walkerID,
+  navigation
 ) {
   return async function (dispatch) {
-    dispatch({ type: MEDICINES_LOADING });
+    dispatch({ type: SERVICES_LOADING });
     try {
       const token = await AsyncStorage.getItem('token');
-      const { data: { medicine } } = await axios({
+      const { data: { service } } = await axios({
         method: 'POST',
         baseURL: SERVER_URL,
-        url: 'medicines',
+        url: 'services',
         data: {
-          name,
-          whatMedicine,
-          dose,
-          initHour,
-          initDate,
-          repetition,
+          initLoc,
+          time,
+          cost,
+          hour,
+          date,
           petID,
+          walkerID,
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ export function createMedicine(
 
       navigation.navigate('Inicio');
 
-      dispatch({ type: MEDICINES_CREATED, payload: medicine });
+      dispatch({ type: SERVICES_CREATED, payload: service });
     } catch (error) {
       alert('Intenta nuevamente ingresar');
     }
@@ -48,21 +48,21 @@ export function createMedicine(
 }
 
 const initialState = {
-  medicines: [],
+  services: [],
   loading: false,
 };
 
-export function medicinesReducer(state = initialState, action) {
+export function servicesReducer(state = initialState, action) {
   switch (action.type) {
-    case MEDICINES_LOADING:
+    case SERVICES_LOADING:
       return {
         ...state,
         loading: true,
       };
-    case MEDICINES_CREATED:
+    case SERVICES_CREATED:
       return {
         ...state,
-        medicines: [...state.medicines, action.payload],
+        services: [...state.services, action.payload],
       };
     default:
       return state;
