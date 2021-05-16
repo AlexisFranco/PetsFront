@@ -17,7 +17,6 @@ function Walker() {
     })
   );
 
-  console.log(walker)
   useEffect(() => {
     dispatch(getWalker(idWalker))
   }, []);

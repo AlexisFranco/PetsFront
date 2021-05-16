@@ -7,6 +7,8 @@ const USERS_LOADING = 'USERS_LOADING';
 const USERS_SUCCESS = 'USERS_SUCCESS';
 const USERS_CLIENT_SUCCESS = 'USERS_CLIENT_SUCCESS';
 const USERS_WALKER_SUCCESS = 'USERS_WALKER_SUCCESS';
+const USERS_WALKERS_SUCCESS = 'USERS_WALKERS_SUCCESS';
+
 
 export function createUser(
   name,
@@ -110,6 +112,23 @@ export function getWalker(idWalker) {
   };
 };
 
+export function getWalkers() {
+  return async function(dispatch) {
+    dispatch({ type: USERS_LOADING})
+    try {
+      const { data: { walkers } } = await axios({
+        method: 'GET',
+        baseURL: SERVER_URL,
+        url: '/walkers',
+      });
+
+      dispatch({ type: USERS_WALKERS_SUCCESS, payload: walkers });
+    } catch(error) {
+        alert('Intenta nuevamente ingresar');
+    };
+  };
+};
+
 const initialState = {
   client: {},
   walker: {},
@@ -137,6 +156,12 @@ export function usersReducer(state = initialState, action) {
         ...action.payload,
       };
     case USERS_WALKER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        ...action.payload,
+      };
+    case USERS_WALKERS_SUCCESS:
       return {
         ...state,
         loading: false,
