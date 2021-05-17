@@ -115,38 +115,28 @@ export function getClient() {
   };
 };
 
-export function getWalker(idWalker) {
+export function getWalkers(idWalker='') {
   return async function(dispatch) {
     dispatch({ type: USERS_LOADING})
     try {
       const { data: { walkers } } = await axios({
         method: 'GET',
         baseURL: SERVER_URL,
-        url: `/walkers?_id=${idWalker}`,
+        url: `/walkers?${idWalker}`,
       });
-
-      dispatch({
-        type: USERS_WALKER_SUCCESS,
-        payload: { walker: walkers[0] },
-      });
+      walkers.length === 1
+        ? dispatch({
+            type: USERS_WALKER_SUCCESS,
+            payload: { walker: walkers[0] },
+          })
+        : dispatch({
+            type: USERS_WALKERS_SUCCESS,
+            payload: walkers
+          });
     } catch(error) {
         alert('Intenta nuevamente ingresar');
-    };
-  };
-};
-
-export function getWalkers() {
-  return async function(dispatch) {
-    dispatch({ type: USERS_LOADING})
-    try {
-      const { data: { walkers } } = await axios({
-        method: 'GET',
-        baseURL: SERVER_URL,
-        url: '/walkers',
-      });
-      dispatch({ type: USERS_WALKERS_SUCCESS, payload: walkers });
-    } catch(error) {
-        alert('Intenta nuevamente ingresar');
+        navigation.navigate('Ingreso');
+        await AsyncStorage.removeItem('token');
     };
   };
 };
