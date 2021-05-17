@@ -5,6 +5,7 @@ const SERVER_URL = REACT_NATIVE_SERVER_URL;
 
 const USERS_LOADING = 'USERS_LOADING';
 const USERS_SUCCESS = 'USERS_SUCCESS';
+const USERS_UPDATED = 'USERS_UPDATED';
 const USERS_CLIENT_SUCCESS = 'USERS_CLIENT_SUCCESS';
 const USERS_WALKER_SUCCESS = 'USERS_WALKER_SUCCESS';
 const USERS_WALKERS_SUCCESS = 'USERS_WALKERS_SUCCESS';
@@ -65,7 +66,29 @@ export function loginUser(email, password, navigation) {
         :
         navigation.navigate('Paseador', { id })
 
-      dispatch({ type: USERS_SUCCESS });
+      dispatch({ type: USERS_SUCCESS, payload: userType });
+    } catch(error) {
+        alert('Intenta nuevamente ingresar');
+    };
+  };
+};
+
+export function updateClient(photo) {
+  return async function(dispatch) {
+    dispatch({ type: USERS_LOADING})
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const { data: { clientUpdate } } = await axios({
+        method: 'PUT',
+        baseURL: SERVER_URL,
+        url: '/clients',
+        data: photo,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      dispatch({ type: USERS_UPDATED, payload: { client: clientUpdate } });
     } catch(error) {
         alert('Intenta nuevamente ingresar');
     };
@@ -132,6 +155,7 @@ const initialState = {
   client: {},
   walker: {},
   walkers: [],
+  userType: '',
   pets: [],
   loading: false,
 };
@@ -147,8 +171,15 @@ export function usersReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+        userType: action.payload,
       };
     case USERS_CLIENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        ...action.payload,
+      };
+    case USERS_UPDATED:
       return {
         ...state,
         loading: false,
