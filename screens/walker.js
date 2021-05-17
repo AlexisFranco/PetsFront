@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { SafeAreaView, FlatList, View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { getWalker } from '../store/usersReducer';
+import { getWalkers } from '../store/usersReducer';
 
 function Walker() {
   const route = useRoute();
@@ -18,7 +18,7 @@ function Walker() {
   );
 
   useEffect(() => {
-    dispatch(getWalker(idWalker))
+    dispatch(getWalkers(`_id=${idWalker}`))
   }, []);
 
   if (loading) return <ActivityIndicator />;
