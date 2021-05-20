@@ -7,7 +7,7 @@ export default StyleSheet.create({
   area: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#ECEAD2',
+    backgroundColor: '#F3F2DC',
     justifyContent: 'center',
   },
   textInput: {
