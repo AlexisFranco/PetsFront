@@ -20,20 +20,24 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <Provider store={ store }>
+    <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name='Ingreso' component={ Login }/>
-          <Stack.Screen name='Registro' component={ Register }/>
-          <Stack.Screen name='Inicio' component={ Client }/>
-          <Stack.Screen name='Paseador' component={ Walker }/>
-          <Stack.Screen name='Crear Mascota' component={ CreatePet }/>
-          <Stack.Screen name='Crear Paseo' component={ CreateService }/>
-          <Stack.Screen name='Crear Medicina' component={ CreateMedicine }/>
-          <Stack.Screen name='Mascota' component={ InformationPet }/>
-          <Stack.Screen name='Medicinas' component={ InformationMedicine }/>
-          <Stack.Screen name='Paseadores' component={ InformationWalker }/>
-          <Stack.Screen name='Información' component={ InformationClient }/>
+          <Stack.Screen
+            name="Ingreso"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Registro" component={Register} />
+          <Stack.Screen name="Inicio" component={Client} />
+          <Stack.Screen name="Paseador" component={Walker} />
+          <Stack.Screen name="Crear Mascota" component={CreatePet} />
+          <Stack.Screen name="Crear Paseo" component={CreateService} />
+          <Stack.Screen name="Crear Medicina" component={CreateMedicine} />
+          <Stack.Screen name="Mascota" component={InformationPet} />
+          <Stack.Screen name="Medicinas" component={InformationMedicine} />
+          <Stack.Screen name="Paseadores" component={InformationWalker} />
+          <Stack.Screen name="Información" component={InformationClient} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
