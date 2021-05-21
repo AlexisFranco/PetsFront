@@ -7,6 +7,7 @@ import Client from './screens/client';
 import Walker from './screens/walker';
 import Register from './screens/register';
 import InformationPet from './screens/informationPet';
+import InformationWalks from './screens/informationWalks';
 import InformationClient from './screens/informationClient';
 import InformationWalker from './screens/informationWalker';
 import InformationMedicine from './screens/informationMedicine';
@@ -36,6 +37,7 @@ export default function App() {
           <Stack.Screen name="Crear Medicina" component={CreateMedicine} />
           <Stack.Screen name="Mascota" component={InformationPet} />
           <Stack.Screen name="Medicinas" component={InformationMedicine} />
+          <Stack.Screen name="Paseos" component={InformationWalks} />
           <Stack.Screen name="Paseadores" component={InformationWalker} />
           <Stack.Screen name="Información" component={InformationClient} />
         </Stack.Navigator>
