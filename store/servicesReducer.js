@@ -49,14 +49,14 @@ export function createService(
   };
 }
 
-export function getServices(idWalker='') {
+export function getServices(query='') {
   return async function(dispatch) {
     dispatch({ type: SERVICES_LOADING})
     try {
       const { data: { services } } = await axios({
         method: 'GET',
         baseURL: SERVER_URL,
-        url: `/services?${idWalker}`,
+        url: `/services?${query}`,
       });
       dispatch({ type: SERVICES_SUCCESS, payload: services })
     } catch(error) {

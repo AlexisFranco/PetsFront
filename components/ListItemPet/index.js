@@ -1,45 +1,88 @@
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import {
-  FlatList,
-  Pressable,
   Text,
+  View,
+  Pressable,
   StyleSheet,
 } from 'react-native';
-
-import { links } from '../../linksClient';
 
 export function ListItemPet(infoPet) {
   const navigation = useNavigation();
 
   return (
-    <FlatList
-      data={links}
-      renderItem={({ item }) => (
+    <View style={styles.container}>
+      <Pressable
+        style={styles.item}
+        onPress={() =>
+          navigation.navigate('Mascota', { infoPet: infoPet.infoPet })
+        }
+      >
+        <MaterialIcons name="pets" size={24} color="#438E92" />
+        <Text>Mascota</Text>
+        <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
+      </Pressable>
+
+      <Pressable
+        style={styles.item}
+        onPress={() =>
+          navigation.navigate('Medicinas', { infoPet: infoPet.infoPet })
+        }
+      >
+        <MaterialIcons name="medical-services" size={24} color="#438E92" />
+        <Text>Medicinas</Text>
+        <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
+      </Pressable>
+
+      {infoPet.infoPet.whatPet !== 'Cat' && (
         <Pressable
           style={styles.item}
-          onPress={() => navigation.navigate( item.name, { infoPet: infoPet.infoPet } )}
+          onPress={() =>
+            navigation.navigate('Paseadores', { infoPet: infoPet.infoPet })
+          }
         >
-          <Text>
-            <Ionicons name={item.icon} size={32} color="black" />
-          </Text>
-          <Text>{item.name}</Text>
-          <Text>
-            <Ionicons name="arrow-forward" size={24} color="black" />{' '}
-          </Text>
+          <MaterialCommunityIcons name="walk" size={24} color="#438E92" />
+          <Text>Paseadores</Text>
+          <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
         </Pressable>
       )}
-      keyExtractor={(item) => item.id}
-    />
+
+      {infoPet.infoPet.whatPet !== 'Cat' && (
+        <Pressable
+          style={styles.item}
+          onPress={() =>
+            navigation.navigate('Paseos', { infoPet: infoPet.infoPet })
+          }
+        >
+          <MaterialCommunityIcons name="dog-service" size={24} color="#438E92" />
+          <Text>Paseos</Text>
+          <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
+        </Pressable>
+      )}
+
+      <View style={styles.linedivider}></View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+  },
   item: {
     flex: 1,
+    width: '95%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  linedivider: {
+    width: '95%',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    margin: 10,
   },
 });
