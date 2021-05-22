@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClient } from '../store/usersReducer';
 import { getPets } from '../store/petsReducer';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import {
   SafeAreaView,
@@ -10,8 +10,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Pressable,
-  Button,
   ActivityIndicator,
 } from 'react-native';
 import { ListItemPet } from '../components/ListItemPet';
@@ -20,14 +18,12 @@ function Client() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { loading, client, pets } = useSelector(({ usersReducer, petsReducer }) => ({
-    client: usersReducer.client,
+  const { loading, pets } = useSelector(({ usersReducer, petsReducer }) => ({
     pets: petsReducer.pets,
     loading: usersReducer.loading,
   }));
 
   useEffect(() => {
-    dispatch(getClient());
     dispatch(getPets());
   }, [pets.length]);
 
@@ -35,12 +31,6 @@ function Client() {
   return (
     !!pets && (
       <SafeAreaView style={styles.container}>
-        <Pressable
-          style={styles.item}
-          onPress={() => navigation.navigate('Información', { client })}
-        >
-          <Text>Información</Text>
-        </Pressable>
         <FlatList
           data={pets}
           renderItem={({ item }) => (
@@ -51,8 +41,10 @@ function Client() {
           )}
           keyExtractor={(item) => item._id}
         />
-        <Button
-          title="Agregar mascota"
+        <FontAwesome5
+          name="plus"
+          size={24}
+          color="black"
           onPress={() => navigation.navigate('Crear Mascota')}
         />
       </SafeAreaView>

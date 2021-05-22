@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack'
+import PhotoHeader from './components/PhotoHeader';
 
 import Login from './screens/login';
 import Client from './screens/client';
@@ -14,6 +15,7 @@ import InformationMedicine from './screens/informationMedicine';
 import CreatePet from './screens/createPet';
 import CreateMedicine from './screens/createMedicine';
 import CreateService from './screens/createService';
+import EditClient from './screens/editClient';
 import { Provider } from 'react-redux';
 import { store } from './store'
 
@@ -30,7 +32,15 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Registro" component={Register} />
-          <Stack.Screen name="Inicio" component={Client} />
+          <Stack.Screen
+            name="Inicio"
+            component={Client}
+            options={{
+              headerRight: () => (
+                <PhotoHeader />
+              ),
+            }}
+          />
           <Stack.Screen name="Paseador" component={Walker} />
           <Stack.Screen name="Crear Mascota" component={CreatePet} />
           <Stack.Screen name="Crear Paseo" component={CreateService} />
@@ -40,6 +50,7 @@ export default function App() {
           <Stack.Screen name="Paseos" component={InformationWalks} />
           <Stack.Screen name="Paseadores" component={InformationWalker} />
           <Stack.Screen name="Información" component={InformationClient} />
+          <Stack.Screen name="Editar Cliente" component={EditClient} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
