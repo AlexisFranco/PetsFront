@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, FlatList, View, Text, StyleSheet, Button, Image } from 'react-native';
+import { SafeAreaView, FlatList, View, Text, StyleSheet, TextInput, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClient, updateClient } from '../store/usersReducer';
+import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function InformationClient() {
+
   const [cameraRollPermission, setCameraRollPermission] = useState('denied');
+  const navigation = useNavigation();
   const dispatch = useDispatch();
+
 
   const { client, photoClient } = useSelector(({ usersReducer }) => ({
       photoClient: usersReducer.client.photo,
       client: usersReducer.client,
     })
-  );
+    );
 
   useEffect(() => {
     ImagePicker.requestMediaLibraryPermissionsAsync().then(({ status }) =>
@@ -51,7 +56,14 @@ function InformationClient() {
   return (
     !!client && (
       <SafeAreaView style={styles.container}>
-        <Image style={styles.image} source={{ uri: client.photo }} />
+        <Image
+          style={styles.image}
+          source={
+            !!client.photo
+              ? { uri: client.photo }
+              : require('../assets/photo-person.png')
+          }
+        />
         <Text>{client.name}</Text>
         <Text>{client.address}</Text>
         <Text>{client.email}</Text>
@@ -66,7 +78,12 @@ function InformationClient() {
           )}
           keyExtractor={(item) => item._id}
         />
-        <Button title="Pick Image" onPress={handlePickImage} />
+        <MaterialCommunityIcons
+          name="pencil-outline"
+          size={24}
+          color="black"
+          onPress={() => navigation.navigate('Editar Cliente')}
+        />
       </SafeAreaView>
     )
   );
