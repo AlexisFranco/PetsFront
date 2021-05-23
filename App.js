@@ -15,7 +15,6 @@ import InformationMedicine from './screens/informationMedicine';
 import CreatePet from './screens/createPet';
 import CreateMedicine from './screens/createMedicine';
 import CreateService from './screens/createService';
-import EditClient from './screens/editClient';
 import { Provider } from 'react-redux';
 import { store } from './store'
 
@@ -50,7 +49,6 @@ export default function App() {
           <Stack.Screen name="Paseos" component={InformationWalks} />
           <Stack.Screen name="Paseadores" component={InformationWalker} />
           <Stack.Screen name="Información" component={InformationClient} />
-          <Stack.Screen name="Editar Cliente" component={EditClient} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

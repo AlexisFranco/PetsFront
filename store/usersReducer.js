@@ -73,7 +73,7 @@ export function loginUser(email, password, navigation) {
   };
 };
 
-export function updateClient(photo) {
+export function updateClient(data) {
   return async function(dispatch) {
     dispatch({ type: USERS_LOADING})
     try {
@@ -82,7 +82,7 @@ export function updateClient(photo) {
         method: 'PUT',
         baseURL: SERVER_URL,
         url: '/clients',
-        data: photo,
+        data: data,
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
