@@ -38,18 +38,20 @@ export default function App() {
             name="Inicio"
             component={Client}
             options={{
-              headerRight: () => (
-                <PhotoHeaderClient />
-              ),
+              headerRight: () => <PhotoHeaderClient />,
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
             }}
           />
           <Stack.Screen
             name="Servicios"
             component={ServiceWalker}
             options={{
-              headerRight: () => (
-                <PhotoHeaderWalker />
-              )
+              headerRight: () => <PhotoHeaderWalker />,
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
             }}
           />
           <Stack.Screen name="Crear Mascota" component={CreatePet} />
