@@ -37,7 +37,7 @@ export function createUser(
 
       userType === 'client'
         ? navigation.navigate('Inicio')
-        : navigation.navigate('Paseador', { id: userID });
+        : navigation.navigate('Servicios', { id: userID });
 
       dispatch({ type: USERS_SUCCESS });
     } catch (error) {
@@ -64,7 +64,7 @@ export function loginUser(email, password, navigation) {
       userType === 'client'?
         navigation.navigate('Inicio')
         :
-        navigation.navigate('Paseador', { id })
+        navigation.navigate('Servicios', { id })
 
       dispatch({ type: USERS_SUCCESS, payload: userType });
     } catch(error) {
