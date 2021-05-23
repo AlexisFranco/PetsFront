@@ -17,7 +17,7 @@ export function ListItemPet(infoPet) {
       <Pressable
         style={styles.item}
         onPress={() =>
-          navigation.navigate('Mascota', { infoPet: infoPet.infoPet })
+          navigation.navigate('Mascota', { infoPet: infoPet })
         }
       >
         <MaterialIcons name="pets" size={24} color="#438E92" />
