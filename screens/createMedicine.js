@@ -37,8 +37,14 @@ function CreateMedicine() {
     const currentDate = selectedDate || initDate;
     setShow(Platform.OS === 'ios');
     const dateFormat = format(currentDate, 'P', { locale: es });
-    const hour = currentDate.getHours() + ':' + currentDate.getMinutes();
-    mode === 'date' ? setInitDate(dateFormat) : setInitHour(hour);
+    const min = currentDate.getMinutes();
+    let hour;
+    if (min.toString().length === 1) {
+      const num = '0' + min;
+      hour = currentDate.getHours() + ':' + num;
+    } else {
+      hour = currentDate.getHours() + ':' + currentDate.getMinutes();
+    }    mode === 'date' ? setInitDate(dateFormat) : setInitHour(hour);
   };
 
   const showMode = (currentMode) => {
