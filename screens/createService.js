@@ -22,7 +22,6 @@ function CreateService() {
   const [hour, setHour] = useState('');
   const [time, setTime] = useState('');
   const [cost, setCost] = useState('');
-  const [token, setToken] = useState('');
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
   const [initLoc, setInitLoc] = useState('');
@@ -34,12 +33,18 @@ function CreateService() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-
     const onChange = (event, selectedDate) => {
       const currentDate = selectedDate || initDate;
       setShow(Platform.OS === 'ios');
       const dateFormat = format(currentDate, 'P', { locale: es });
-      const hour = currentDate.getHours() + ':' + currentDate.getMinutes();
+      const min = currentDate.getMinutes();
+      let hour;
+      if (min.toString().length === 1) {
+        const num = '0' + min;
+        hour = currentDate.getHours() + ':' + num;
+      } else {
+        hour = currentDate.getHours() + ':' + currentDate.getMinutes();
+      }
       mode === 'date' ? setDate(dateFormat) : setHour(hour);
     };
 
@@ -57,8 +62,8 @@ function CreateService() {
     };
 
 
-  function handleSubmit() {
-    dispatch(
+    function handleSubmit() {
+     dispatch(
       createService(
         initLoc,
         time,
@@ -77,7 +82,7 @@ function CreateService() {
       <SafeAreaView style={styles.container}>
         <TextInput
           style={styles.textInput}
-          placeholder="Inicio de paseo"
+          placeholder="Dirección donde inicia el paseo"
           onChangeText={(text) => setInitLoc(text)}
           value={initLoc}
           autoCapitalize="none"
