@@ -5,6 +5,8 @@ const SERVER_URL = REACT_NATIVE_SERVER_URL;
 
 const PETS_LOADING = 'PETS_LOADING';
 const PETS_SUCCESS = 'PETS_SUCCESS';
+const PET_SUCCESS = 'PET_SUCCESS';
+const PET_UPDATED = 'PET_UPDATED';
 const PETS_CREATED = 'PETS_CREATED';
 
 export function getPets() {
@@ -23,7 +25,27 @@ export function getPets() {
 
       dispatch({ type: PETS_SUCCESS, payload: pets });
     } catch (error) {
-      alert('Intenta nuevamente ingresar');
+      alert('Intenta más tarde');
+    }
+  };
+}
+
+export function getPet(petID) {
+  return async function (dispatch) {
+    dispatch({ type: PETS_LOADING });
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const { data: { pet } } = await axios({
+        method: 'GET',
+        baseURL: SERVER_URL,
+        url: `/pets/${petID}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch({ type: PET_SUCCESS, payload: pet });
+    } catch (error) {
+      alert('Intenta más tarde');
     }
   };
 }
@@ -59,8 +81,31 @@ export function createPet(name, whatPet, dateBirth, weight, idealWeight, breed, 
   };
 }
 
+export function updatePet(data, indexPet) {
+  return async function(dispatch) {
+    dispatch({ type: PETS_LOADING})
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const { data: { petUpdate } } = await axios({
+        method: 'PUT',
+        baseURL: SERVER_URL,
+        url: '/pets',
+        data: data,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      dispatch({ type: PET_UPDATED, payload: petUpdate, indexPet });
+    } catch(error) {
+        alert('Intenta más tarde');
+    };
+  };
+};
+
 const initialState = {
   pets: [],
+  pet: {},
   loading: false,
 };
 
@@ -70,6 +115,12 @@ export function petsReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case PET_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        pet: action.payload,
       };
     case PETS_SUCCESS:
       return {
@@ -81,6 +132,15 @@ export function petsReducer(state = initialState, action) {
       return {
         ...state,
         pets: [...state.pets, action.payload],
+      };
+    case PET_UPDATED:
+      return {
+        ...state,
+        loading: false,
+        pet: action.payload,
+        pets: state.pets.map((pet, index) => {
+          return action.indexPet === index ? action.payload : pet;
+        }),
       };
     default:
       return state;
