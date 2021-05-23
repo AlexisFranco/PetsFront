@@ -95,6 +95,28 @@ export function updateClient(data) {
   };
 };
 
+export function updateWalker(data) {
+  return async function(dispatch) {
+    dispatch({ type: USERS_LOADING})
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const { data: { walkerUpdate } } = await axios({
+        method: 'PUT',
+        baseURL: SERVER_URL,
+        url: '/walkers',
+        data: data,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      dispatch({ type: USERS_UPDATED, payload: { walker: walkerUpdate } });
+    } catch(error) {
+        alert('Intenta nuevamente ingresar');
+    };
+  };
+};
+
 export function getClient() {
   return async function(dispatch) {
     dispatch({ type: USERS_LOADING})
