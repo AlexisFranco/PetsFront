@@ -5,16 +5,20 @@ import React, { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { createPet } from '../store/petsReducer';
+import { createPet } from '../../store/petsReducer';
+import { Fontisto } from '@expo/vector-icons';
+import styles from './styles'
 
 import {
-  StyleSheet,
-  SafeAreaView,
-  TouchableWithoutFeedback,
+  Text,
+  View,
+  Image,
   Keyboard,
   TextInput,
-  Button,
-  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 function CreatePet() {
@@ -51,7 +55,7 @@ function CreatePet() {
         weight,
         idealWeight,
         breed,
-        navigation,
+        navigation
       )
     );
   }
@@ -65,6 +69,7 @@ function CreatePet() {
       accesible={false}
     >
       <SafeAreaView style={styles.container}>
+        <Image source={require('../../assets/pets.png')} style={styles.image} />
         <TextInput
           style={styles.textInput}
           placeholder="Nombre de tu mascota"
@@ -73,6 +78,7 @@ function CreatePet() {
           autoCapitalize="none"
         />
         <RNPickerSelect
+          style={pickerWhatPet}
           onValueChange={(value) => setWhatPet(value)}
           placeholder={{
             label: 'Selecciona que tipo de mascota tienes',
@@ -83,13 +89,28 @@ function CreatePet() {
             { label: 'Gato/a', value: 'Cat' },
           ]}
         />
-        <Text>{dateBirth}</Text>
-        <Button
-          onPress={showDatepicker}
-          title="Ingresa la fecha de nacimiento de tu mascota"
-        />
+        <View style={styles.viewDate}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Fecha de nacimiento de tu mascota"
+            value={dateBirth}
+            editable={false}
+          />
+          <Fontisto
+            style={styles.iconDate}
+            name="date"
+            size={24}
+            color="#438E92"
+            onPress={showDatepicker}
+          />
+        </View>
         {show && (
           <DateTimePicker
+            style={{
+              width: 400,
+              left: 135,
+              marginBottom: 36,
+            }}
             testID="dateTimePicker"
             value={date}
             mode={mode}
@@ -119,23 +140,33 @@ function CreatePet() {
           value={breed}
           autoCapitalize="none"
         />
-        <Button title="Agregar mascosta" onPress={handleSubmit} />
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={{ color: 'white' }}>Crea tu mascota</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  textInput: {
+const pickerWhatPet = StyleSheet.create({
+  inputIOS: {
+    width: '85%',
     height: 40,
-    borderColor: '#D9D4DC',
-    borderBottomWidth: 1,
+    backgroundColor: '#FAF9F0',
+    borderRadius: 10,
+    paddingLeft: 10,
     marginBottom: 36,
-    marginLeft: 15,
+    marginLeft: 32,
+    marginRight: 15,
+  },
+  inputAndroid: {
+    width: '85%',
+    height: 40,
+    backgroundColor: '#FAF9F0',
+    borderRadius: 10,
+    paddingLeft: 10,
+    marginBottom: 36,
+    marginLeft: 32,
     marginRight: 15,
   },
 });
