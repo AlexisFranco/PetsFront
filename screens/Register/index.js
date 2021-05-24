@@ -87,7 +87,7 @@ function Register() {
             ]}
           />
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text>Registrarse</Text>
+            <Text style={{ color: 'white' }}>Registrarse</Text>
           </TouchableOpacity>
         </SafeAreaView>
       </TouchableWithoutFeedback>
