@@ -54,7 +54,7 @@ function Login() {
             secureTextEntry
           />
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text>Ingresar</Text>
+            <Text style={{color: 'white'}}>Ingresar</Text>
           </TouchableOpacity>
           <Text>¿Olvidaste la contraseña? </Text>
           <View style={styles.register}>

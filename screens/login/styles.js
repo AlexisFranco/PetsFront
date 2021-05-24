@@ -29,7 +29,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#438E92',
     borderRadius: 10,
-    marginTop: 20,
+    marginTop: 50,
     marginBottom: 30,
     padding: 10,
     width: '85%',
