@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import PhotoHeaderClient from './components/PhotoHeaderClient';
 
 import Login from './screens/Login';
-import Client from './screens/client';
+import Client from './screens/Client';
 import Walker from './screens/Walker';
 import Register from './screens/Register';
 import InformationPet from './screens/informationPet';
