@@ -16,13 +16,21 @@ export function ListItemPet(infoPet) {
     <View style={styles.container}>
       <Pressable
         style={styles.item}
-        onPress={() =>
-          navigation.navigate('Mascota', { infoPet: infoPet })
-        }
+        onPress={() => navigation.navigate('Mascota', { infoPet: infoPet })}
       >
-        <MaterialIcons style={styles.iconLeft} name="pets" size={24} color="#438E92" />
+        <MaterialIcons
+          style={styles.iconLeft}
+          name="pets"
+          size={24}
+          color="#438E92"
+        />
         <Text style={styles.text}>Mascota</Text>
-        <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
+        <MaterialIcons
+          style={styles.iconRight}
+          name="arrow-forward-ios"
+          size={15}
+          color="#438E92"
+        />
       </Pressable>
 
       <Pressable
@@ -31,9 +39,19 @@ export function ListItemPet(infoPet) {
           navigation.navigate('Medicinas', { infoPet: infoPet.infoPet })
         }
       >
-        <MaterialIcons style={styles.iconLeft} name="medical-services" size={24} color="#438E92" />
+        <MaterialIcons
+          style={styles.iconLeft}
+          name="medical-services"
+          size={24}
+          color="#438E92"
+        />
         <Text style={styles.text}>Medicinas</Text>
-        <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
+        <MaterialIcons
+          style={styles.iconRight}
+          name="arrow-forward-ios"
+          size={15}
+          color="#438E92"
+        />
       </Pressable>
 
       {infoPet.infoPet.whatPet !== 'Cat' && (
@@ -43,9 +61,19 @@ export function ListItemPet(infoPet) {
             navigation.navigate('Paseadores', { infoPet: infoPet.infoPet })
           }
         >
-          <MaterialCommunityIcons style={styles.iconLeft} name="walk" size={24} color="#438E92" />
+          <MaterialCommunityIcons
+            style={styles.iconLeft}
+            name="walk"
+            size={24}
+            color="#438E92"
+          />
           <Text style={styles.text}>Paseadores</Text>
-          <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
+          <MaterialIcons
+            style={styles.iconRight}
+            name="arrow-forward-ios"
+            size={15}
+            color="#438E92"
+          />
         </Pressable>
       )}
 
@@ -56,9 +84,19 @@ export function ListItemPet(infoPet) {
             navigation.navigate('Paseos', { infoPet: infoPet.infoPet })
           }
         >
-          <MaterialCommunityIcons style={styles.iconLeft} name="dog-service" size={24} color="#438E92" />
+          <MaterialCommunityIcons
+            style={styles.iconLeft}
+            name="dog-service"
+            size={24}
+            color="#438E92"
+          />
           <Text style={styles.text}>Paseos</Text>
-          <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
+          <MaterialIcons
+            style={styles.iconRight}
+            name="arrow-forward-ios"
+            size={15}
+            color="#438E92"
+          />
         </Pressable>
       )}
     </View>
@@ -68,6 +106,8 @@ export function ListItemPet(infoPet) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingRight: 25,
+    paddingLeft: 25,
   },
   item: {
     flex: 1,

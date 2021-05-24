@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     width: '95%',
     paddingTop: 15,
     paddingBottom: 15,
-    backgroundColor: '#FAF9F0',
+    backgroundColor: 'rgba(250,249,240, 0.8)',
     marginTop: 15,
     marginLeft: 10,
     marginRight: 10,
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: 20,
   },
   options: {
     flex: 4,
@@ -121,13 +122,16 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   plus: {
-    backgroundColor: '#438E92',
-    width: 35,
-    height: 35,
+    backgroundColor: '#85C7B5',
+    width: 45,
+    height: 45,
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,
+    position: 'absolute',
+    bottom: 40,
+    right: 15,
   },
 });
 
