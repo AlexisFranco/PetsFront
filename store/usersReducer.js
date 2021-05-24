@@ -1,8 +1,9 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { REACT_NATIVE_SERVER_URL } from '@env';
-const SERVER_URL = REACT_NATIVE_SERVER_URL;
+import { Alert } from 'react-native';
 
+const SERVER_URL = REACT_NATIVE_SERVER_URL;
 const USERS_LOADING = 'USERS_LOADING';
 const USERS_SUCCESS = 'USERS_SUCCESS';
 const USERS_UPDATED = 'USERS_UPDATED';
@@ -41,7 +42,7 @@ export function createUser(
 
       dispatch({ type: USERS_SUCCESS });
     } catch (error) {
-      alert('Intenta nuevamente ingresar');
+      Alert.alert('Oops!','Intenta nuevamente registrarte');
     }
   };
 };
@@ -68,7 +69,13 @@ export function loginUser(email, password, navigation) {
 
       dispatch({ type: USERS_SUCCESS, payload: userType });
     } catch(error) {
-        alert('Intenta nuevamente ingresar');
+        Alert.alert(
+          'Oops!',
+          'Usuario o contraseña incorrectos, intenta nuevamente.',
+          [
+            { text: 'Cerrar' }
+          ]
+        );
     };
   };
 };
