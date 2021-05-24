@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const PhotoHeaderWalker = () => {
@@ -11,7 +11,7 @@ const PhotoHeaderWalker = () => {
   }));
 
   return (
-    <TouchableHighlight onPress={() => navigation.navigate('Paseador')}>
+    <TouchableOpacity onPress={() => navigation.navigate('Paseador')}>
       <Image
         style={styles.image}
         source={
@@ -20,14 +20,16 @@ const PhotoHeaderWalker = () => {
             : require('../../assets/photo-person.png')
         }
       />
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   image: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
+    borderRadius: 50,
+    marginRight: 15,
   },
 });
 
