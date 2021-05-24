@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { getClient } from '../../store/usersReducer';
 
 const PhotoHeaderClient = () => {
@@ -17,7 +17,7 @@ const PhotoHeaderClient = () => {
   }, []);
 
   return (
-    <TouchableHighlight onPress={() => navigation.navigate('Información')}>
+    <TouchableOpacity onPress={() => navigation.navigate('Información')}>
       <Image
         style={styles.image}
         source={
@@ -26,14 +26,16 @@ const PhotoHeaderClient = () => {
             : require('../../assets/photo-person.png')
         }
       />
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   image: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
+    borderRadius: 50,
+    marginRight: 15,
   },
 });
 
