@@ -61,8 +61,6 @@ export function ListItemPet(infoPet) {
           <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
         </Pressable>
       )}
-
-      <View style={styles.linedivider}></View>
     </View>
   );
 }
@@ -70,19 +68,13 @@ export function ListItemPet(infoPet) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
   },
   item: {
     flex: 1,
     width: '95%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  linedivider: {
-    width: '95%',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    margin: 10,
+    justifyContent: 'space-evenly',
+    paddingLeft: 5,
   },
 });
