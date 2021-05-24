@@ -8,7 +8,6 @@ import {
   Image,
   Keyboard,
   TextInput,
-  StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   KeyboardAvoidingView,
@@ -33,7 +32,10 @@ function Login() {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accesible={false}>
         <SafeAreaView style={styles.area}>
-          <Image source={require('../../assets/pets.png')} style={styles.image} />
+          <Image
+            source={require('../../assets/pets.png')}
+            style={styles.image}
+          />
           <TextInput
             style={styles.textInput}
             placeholder="Correo electrónico"
@@ -54,6 +56,7 @@ function Login() {
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text>Ingresar</Text>
           </TouchableOpacity>
+          <Text>¿Olvidaste la contraseña? </Text>
           <View style={styles.register}>
             <Text>Aún no tienes una cuenta? </Text>
             <Text
