@@ -20,9 +20,9 @@ export function ListItemPet(infoPet) {
           navigation.navigate('Mascota', { infoPet: infoPet })
         }
       >
-        <MaterialIcons name="pets" size={24} color="#438E92" />
-        <Text>Mascota</Text>
-        <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
+        <MaterialIcons style={styles.iconLeft} name="pets" size={24} color="#438E92" />
+        <Text style={styles.text}>Mascota</Text>
+        <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
       </Pressable>
 
       <Pressable
@@ -31,9 +31,9 @@ export function ListItemPet(infoPet) {
           navigation.navigate('Medicinas', { infoPet: infoPet.infoPet })
         }
       >
-        <MaterialIcons name="medical-services" size={24} color="#438E92" />
-        <Text>Medicinas</Text>
-        <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
+        <MaterialIcons style={styles.iconLeft} name="medical-services" size={24} color="#438E92" />
+        <Text style={styles.text}>Medicinas</Text>
+        <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
       </Pressable>
 
       {infoPet.infoPet.whatPet !== 'Cat' && (
@@ -43,9 +43,9 @@ export function ListItemPet(infoPet) {
             navigation.navigate('Paseadores', { infoPet: infoPet.infoPet })
           }
         >
-          <MaterialCommunityIcons name="walk" size={24} color="#438E92" />
-          <Text>Paseadores</Text>
-          <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
+          <MaterialCommunityIcons style={styles.iconLeft} name="walk" size={24} color="#438E92" />
+          <Text style={styles.text}>Paseadores</Text>
+          <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
         </Pressable>
       )}
 
@@ -56,9 +56,9 @@ export function ListItemPet(infoPet) {
             navigation.navigate('Paseos', { infoPet: infoPet.infoPet })
           }
         >
-          <MaterialCommunityIcons name="dog-service" size={24} color="#438E92" />
-          <Text>Paseos</Text>
-          <MaterialIcons name="arrow-forward-ios" size={24} color="#438E92" />
+          <MaterialCommunityIcons style={styles.iconLeft} name="dog-service" size={24} color="#438E92" />
+          <Text style={styles.text}>Paseos</Text>
+          <MaterialIcons style={styles.iconRight} name="arrow-forward-ios" size={24} color="#438E92" />
         </Pressable>
       )}
     </View>
@@ -74,7 +74,18 @@ const styles = StyleSheet.create({
     width: '95%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    alignContent: 'flex-start',
     paddingLeft: 5,
+  },
+  text: {
+    flex: 5,
+    textAlign: 'center',
+  },
+  iconLeft: {
+    flex: 1,
+    paddingLeft: 10,
+  },
+  iconRight: {
+    flex:1,
   },
 });
