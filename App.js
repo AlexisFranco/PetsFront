@@ -6,8 +6,7 @@ import PhotoHeaderClient from './components/PhotoHeaderClient';
 import Login from './screens/Login';
 import Client from './screens/client';
 import Walker from './screens/Walker';
-import Register from './screens/register';
-
+import Register from './screens/Register';
 import InformationPet from './screens/informationPet';
 import InformationWalks from './screens/InformationWalks';
 import InformationClient from './screens/informationClient';
@@ -33,7 +32,15 @@ export default function App() {
             component={Login}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Registro" component={Register} />
+          <Stack.Screen
+            name="Registro"
+            component={Register}
+            options={{
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
+            }}
+          />
           <Stack.Screen
             name="Inicio"
             component={Client}
