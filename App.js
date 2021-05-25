@@ -9,7 +9,7 @@ import Walker from './screens/Walker';
 import Register from './screens/Register';
 import InformationPet from './screens/informationPet';
 import InformationWalks from './screens/InformationWalks';
-import InformationClient from './screens/informationClient';
+import InformationClient from './screens/InformationClient';
 import RequestWalker from './screens/requestWalker';
 import InformationMedicine from './screens/informationMedicine';
 import CreatePet from './screens/CreatePet';
@@ -76,7 +76,15 @@ export default function App() {
           <Stack.Screen name="Medicinas" component={InformationMedicine} />
           <Stack.Screen name="Paseos" component={InformationWalks} />
           <Stack.Screen name="Paseadores" component={RequestWalker} />
-          <Stack.Screen name="Información" component={InformationClient} />
+          <Stack.Screen
+            name="Información"
+            component={InformationClient}
+            options={{
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
+            }}
+          />
           <Stack.Screen name="Paseador" component={Walker} />
         </Stack.Navigator>
       </NavigationContainer>

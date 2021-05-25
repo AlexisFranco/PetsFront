@@ -10,7 +10,7 @@ const USERS_UPDATED = 'USERS_UPDATED';
 const USERS_CLIENT_SUCCESS = 'USERS_CLIENT_SUCCESS';
 const USERS_WALKER_SUCCESS = 'USERS_WALKER_SUCCESS';
 const USERS_WALKERS_SUCCESS = 'USERS_WALKERS_SUCCESS';
-
+const USERS_LOG_OUT = 'USERS_LOG_OUT'
 
 export function createUser(
   name,
@@ -170,6 +170,12 @@ export function getWalkers(idWalker='') {
   };
 };
 
+export function logUserOut(){
+  return {
+    type: USERS_LOG_OUT,
+  };
+};
+
 const initialState = {
   client: {},
   walker: {},
@@ -215,6 +221,15 @@ export function usersReducer(state = initialState, action) {
         ...state,
         loading: false,
         walkers: action.payload,
+      };
+    case USERS_LOG_OUT:
+      return {
+        client: {},
+        walker: {},
+        walkers: [],
+        userType: '',
+        pets: [],
+        loading: false,
       };
     default:
       return state;
