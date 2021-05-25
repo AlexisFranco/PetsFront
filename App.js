@@ -7,10 +7,11 @@ import Login from './screens/Login';
 import Client from './screens/Client';
 import Walker from './screens/Walker';
 import Register from './screens/Register';
+import RequestWalk from './screens/RequestWalk';
+import ServicesWalker from './screens/ServicesWalker';
 import InformationPet from './screens/InformationPet';
 import InformationWalks from './screens/InformationWalks';
 import InformationClient from './screens/InformationClient';
-import RequestWalker from './screens/requestWalker';
 import InformationMedicine from './screens/informationMedicine';
 import CreatePet from './screens/CreatePet';
 import CreateMedicine from './screens/createMedicine';
@@ -18,7 +19,6 @@ import CreateService from './screens/createService';
 import { Provider } from 'react-redux';
 import { store } from './store'
 import PhotoHeaderWalker from './components/PhotoHeaderWalker';
-import ServicesWalker from './screens/ServicesWalker';
 
 const Stack = createStackNavigator();
 
@@ -91,7 +91,15 @@ export default function App() {
               },
             }}
           />
-          <Stack.Screen name="Paseadores" component={RequestWalker} />
+          <Stack.Screen
+            name="Paseadores"
+            component={RequestWalk}
+            options={{
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
+            }}
+          />
           <Stack.Screen
             name="Información"
             component={InformationClient}
