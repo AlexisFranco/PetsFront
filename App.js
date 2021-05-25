@@ -85,7 +85,15 @@ export default function App() {
               },
             }}
           />
-          <Stack.Screen name="Paseador" component={Walker} />
+          <Stack.Screen
+            name="Paseador"
+            component={Walker}
+            options={{
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
