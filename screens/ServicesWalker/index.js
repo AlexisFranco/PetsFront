@@ -1,34 +1,43 @@
 import React, { useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { SafeAreaView, FlatList, View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
+import {
+  SafeAreaView,
+  FlatList,
+  View,
+  Text,
+  ActivityIndicator,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { getWalkers } from '../store/usersReducer';
-import { getServices, updateService } from '../store/servicesReducer';
+import { getWalkers } from '../../store/usersReducer';
+import { getServices, updateService } from '../../store/servicesReducer';
 import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import styles from './styles';
 
 function ServiceWalker() {
   const route = useRoute();
   const idWalker = route.params.id;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { loading, services } = useSelector(({ usersReducer, servicesReducer }) => ({
+  const { loading, services } = useSelector(
+    ({ usersReducer, servicesReducer }) => ({
       loading: usersReducer.loading,
       services: servicesReducer.services,
     })
   );
 
   useEffect(() => {
-    dispatch(getWalkers(`_id=${idWalker}`))
+    dispatch(getWalkers(`_id=${idWalker}`));
     dispatch(getServices(`walkerID=${idWalker}`));
   }, [services.length]);
 
-  function handleChange(_id, status, index){
-    status === 'Solicitado' ?
-      dispatch(updateService({ status: 'Aceptado' }, _id, index))
-      :
-      dispatch(updateService({ status: 'Terminado' }, _id, index));
+  function handleChange(_id, status, index) {
+    status === 'Solicitado'
+      ? dispatch(updateService({ status: 'Aceptado' }, _id, index))
+      : dispatch(updateService({ status: 'Terminado' }, _id, index));
   }
 
   function handleCancel(_id, index) {
@@ -53,7 +62,7 @@ function ServiceWalker() {
                         source={
                           !!item.petID.photo
                             ? { uri: item.petID.photo }
-                            : require('../assets/photo-dog.png')
+                            : require('../../assets/photo-dog.png')
                         }
                       />
                     </View>
@@ -64,7 +73,7 @@ function ServiceWalker() {
                       source={
                         !!item.petID.photo
                           ? { uri: item.petID.photo }
-                          : require('../assets/photo-cat.png')
+                          : require('../../assets/photo-cat.png')
                       }
                     />
                   )}
@@ -139,87 +148,5 @@ function ServiceWalker() {
     )
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F3F2DC',
-    justifyContent: 'center',
-  },
-  infoService: {
-    flex: 1,
-    width: '95%',
-    backgroundColor: '#FAF9F0',
-    flexDirection: 'row',
-    paddingTop: 15,
-    paddingBottom: 15,
-    marginTop: 15,
-    marginLeft: 10,
-    marginRight: 10,
-    borderRadius: 10,
-    borderColor: '#438E92',
-    borderWidth: 0.5,
-  },
-  infoPet: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 40,
-    marginLeft: 10,
-  },
-  options: {
-    flex: 3,
-    justifyContent: 'center',
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 15,
-    borderColor: '#438E92',
-    borderWidth: 0.5,
-  },
-  eachItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
-  },
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginRight: 5
-  },
-  text: {
-    marginLeft: 10,
-  },
-  textPet: {
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  buttonProcess: {
-    backgroundColor: '#438E92',
-    marginTop: 5,
-    marginRight: 10,
-    paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 8,
-    paddingRight: 8,
-    borderRadius: 5,
-  },
-  buttonCancel: {
-    backgroundColor: '#FC1B3A',
-    marginTop: 5,
-    marginLeft: 10,
-    paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 8,
-    paddingRight: 8,
-    borderRadius: 5,
-  },
-  textButton: {
-    color: '#FAF9F0',
-    fontWeight: 'bold',
-  },
-});
 
 export default ServiceWalker;
