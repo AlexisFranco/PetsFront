@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, FlatList, View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClient, updateClient } from '../store/usersReducer';
+import { getClient, updateClient, logUserOut } from '../../store/usersReducer';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './styles'
 
 function InformationClient() {
-
   const { client, photoClient } = useSelector(({ usersReducer }) => ({
     photoClient: usersReducer.client.photo,
     client: usersReducer.client,
@@ -22,7 +32,9 @@ function InformationClient() {
   const [photo, setPhoto] = useState(client.photo);
   const [image, setImage] = useState({});
   const [cameraRollPermission, setCameraRollPermission] = useState('denied');
+  const navigation = useNavigation();
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     ImagePicker.requestMediaLibraryPermissionsAsync().then(({ status }) =>
@@ -43,14 +55,14 @@ function InformationClient() {
     setEdit(false);
     const data = new FormData();
     data.append('name', name);
-    client.email !== email && (data.append('email', email));
-    client.phoneNum !== phoneNum && (data.append('phoneNum', phoneNum));
-    client.address !== address && (data.append('address', address));
-    changePhoto === true && (
+    client.email !== email && data.append('email', email);
+    client.phoneNum !== phoneNum && data.append('phoneNum', phoneNum);
+    client.address !== address && data.append('address', address);
+    changePhoto === true &&
       data.append('photo', {
         ...image,
         name: `photo_${Math.ceil(Math.random() * 10000)}.jpg`,
-      }));
+      });
     dispatch(updateClient(data));
     setChangePhoto(false);
   }
@@ -65,6 +77,12 @@ function InformationClient() {
     setPhoto(client.photo);
   }
 
+  async function logOut() {
+    AsyncStorage.removeItem('token');
+    dispatch(logUserOut());
+    navigation.navigate('Ingreso');
+  }
+
   async function handlePickImage() {
     try {
       const dataImage = await ImagePicker.launchImageLibraryAsync({
@@ -72,7 +90,7 @@ function InformationClient() {
         allowsEditing: true,
         aspect: [4, 3],
       });
-      if(dataImage.cancelled === false) {
+      if (dataImage.cancelled === false) {
         setImage(dataImage);
         setPhoto(dataImage.uri);
         setChangePhoto(true);
@@ -80,7 +98,7 @@ function InformationClient() {
         setPhoto(client.photo);
       }
     } catch (err) {
-      console.dir(err)
+      console.dir(err);
     }
   }
 
@@ -90,11 +108,22 @@ function InformationClient() {
         <Image
           style={styles.image}
           source={
-            !!photo ? { uri: photo } : require('../assets/photo-person.png')
+            !!photo ? { uri: photo } : require('../../assets/photo-person.png')
           }
         />
+        {edit === true && <View style={styles.editPhoto} />}
+        {edit === true && (
+          <Ionicons
+            style={styles.iconCamera}
+            name="ios-camera"
+            size={32}
+            color="black"
+            onPress={handlePickImage}
+          />
+        )}
+
         <TextInput
-          style={styles.textInput}
+          style={edit ? styles.textInput : input.textInput}
           placeholder="Nombre Completo"
           onChangeText={(text) => setName(text)}
           value={name}
@@ -102,7 +131,7 @@ function InformationClient() {
           editable={edit}
         />
         <TextInput
-          style={styles.textInput}
+          style={edit ? styles.textInput : input.textInput}
           placeholder="Correo electrónico"
           onChangeText={(text) => setEmail(text)}
           value={email}
@@ -112,7 +141,7 @@ function InformationClient() {
           editable={edit}
         />
         <TextInput
-          style={styles.textInput}
+          style={edit ? styles.textInput : input.textInput}
           placeholder="Teléfono"
           onChangeText={(text) => setPhoneNum(text)}
           value={phoneNum}
@@ -120,60 +149,61 @@ function InformationClient() {
           editable={edit}
         />
         <TextInput
-          style={styles.textInput}
+          style={edit ? styles.textInput : input.textInput}
           placeholder="Dirección"
           onChangeText={(text) => setAddress(text)}
           value={address}
           editable={edit}
         />
-        <Text>Mascotas</Text>
-        <FlatList
-          data={client.petIDs}
-          renderItem={({ item }) => (
-            <View>
-              <Text>{item.name}</Text>
-            </View>
-          )}
-          keyExtractor={(item) => item._id}
-        />
-        { edit === true && (
-          <View>
-            <Ionicons
-              name="ios-camera"
-              size={24}
-              color="black"
-              onPress={handlePickImage}
-            />
-            <TouchableOpacity onPress={handleSave}>
-              <Text>Guardar</Text>
+        {edit === true && (
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={styles.buttonSave}
+              onPress={handleSave}
+            >
+              <Text style={{ color: 'white' }}>Guardar</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleCancel}>
-              <Text>Cancelar</Text>
+            <TouchableOpacity
+              style={styles.buttonCancel}
+              onPress={handleCancel}
+            >
+              <Text style={{ color: 'white' }}>Cancelar</Text>
             </TouchableOpacity>
           </View>
         )}
-        { edit === false && (
+        {edit === false && (
           <MaterialCommunityIcons
+            style={styles.iconEdit}
             name="pencil-outline"
             size={24}
-            color="black"
+            color="#438E92"
             onPress={() => setEdit(true)}
           />
+        )}
+        {edit === false && (
+          <TouchableOpacity
+            style={styles.buttonLogOut}
+            onPress={() => logOut()}
+          >
+            <Text style={{ color: 'white' }}>Cerrar sesión</Text>
+          </TouchableOpacity>
         )}
       </SafeAreaView>
     )
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-  },
-  image: {
-    width: 300,
-    height: 300,
+const input = StyleSheet.create({
+  textInput: {
+    width: '85%',
+    height: 40,
+    backgroundColor: '#F3F2DC',
+    borderRadius: 10,
+    paddingLeft: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    textAlign: 'center',
+    fontSize: 15,
   },
 });
 
