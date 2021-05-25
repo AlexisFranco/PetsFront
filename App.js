@@ -15,7 +15,7 @@ import InformationClient from './screens/InformationClient';
 import InformationMedicine from './screens/InformationMedicine';
 import CreatePet from './screens/CreatePet';
 import CreateMedicine from './screens/CreateMedicine';
-import CreateService from './screens/createService';
+import CreateService from './screens/CreateService';
 import { Provider } from 'react-redux';
 import { store } from './store'
 import PhotoHeaderWalker from './components/PhotoHeaderWalker';
@@ -70,7 +70,15 @@ export default function App() {
               },
             }}
           />
-          <Stack.Screen name="Crear Paseo" component={CreateService} />
+          <Stack.Screen
+            name="Crear Paseo"
+            component={CreateService}
+            options={{
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
+            }}
+          />
           <Stack.Screen
             name="Crear Medicina"
             component={CreateMedicine}
