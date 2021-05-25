@@ -127,7 +127,7 @@ function CreateService() {
             <TextInput
               style={styles.textInput}
               placeholder="Fecha del paseo"
-              value={hour}
+              value={date}
               editable={false}
             />
             <Fontisto
@@ -142,7 +142,7 @@ function CreateService() {
             <TextInput
               style={styles.textInput}
               placeholder="Hora del paseo"
-              value={date}
+              value={hour}
               editable={false}
             />
             <Ionicons

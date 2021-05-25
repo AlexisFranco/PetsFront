@@ -4,7 +4,26 @@ import { REACT_NATIVE_SERVER_URL } from '@env';
 const SERVER_URL = REACT_NATIVE_SERVER_URL;
 
 const MEDICINES_LOADING = 'MEDICINES_LOADING';
+const MEDICINES_SUCCESS = 'MEDICINES_SUCCESS';
 const MEDICINES_CREATED = 'MEDICINES_CREATED';
+
+export function getMedicines(query='') {
+  return async function(dispatch) {
+    dispatch({ type: MEDICINES_LOADING})
+    try {
+      const { data: { medicines } } = await axios({
+        method: 'GET',
+        baseURL: SERVER_URL,
+        url: `/medicines?${query}`,
+      });
+      dispatch({ type: MEDICINES_SUCCESS, payload: medicines });
+    } catch(error) {
+        alert('Intenta nuevamente ingresar');
+        navigation.navigate('Ingreso');
+        await AsyncStorage.removeItem('token');
+    };
+  };
+};
 
 export function createMedicine(
   name,
@@ -38,7 +57,7 @@ export function createMedicine(
         },
       });
 
-      navigation.navigate('Inicio');
+      navigation.navigate('Medicinas');
 
       dispatch({ type: MEDICINES_CREATED, payload: medicine });
     } catch (error) {
@@ -58,6 +77,12 @@ export function medicinesReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
+      };
+    case MEDICINES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        medicines: action.payload,
       };
     case MEDICINES_CREATED:
       return {

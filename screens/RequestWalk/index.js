@@ -54,7 +54,12 @@ function InformationWalker() {
                   <Text style={styles.text}>{item.description}</Text>
                 </View>
               )}
-
+              {!!item.workingHours && (
+                <View style={styles.eachItem}>
+                  <Ionicons name="time-outline" size={20} color="#438E92" />
+                  <Text style={styles.text}>Horario: {item.workingHours}</Text>
+                </View>
+              )}
               {!!item.cost && (
                 <View style={styles.eachItem}>
                   <FontAwesome5 name="money-bill" size={15} color="#438E92" />
