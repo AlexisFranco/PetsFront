@@ -18,7 +18,7 @@ import CreateService from './screens/createService';
 import { Provider } from 'react-redux';
 import { store } from './store'
 import PhotoHeaderWalker from './components/PhotoHeaderWalker';
-import ServiceWalker from './screens/serviceWalker';
+import ServicesWalker from './screens/ServicesWalker';
 
 const Stack = createStackNavigator();
 
@@ -53,7 +53,7 @@ export default function App() {
           />
           <Stack.Screen
             name="Servicios"
-            component={ServiceWalker}
+            component={ServicesWalker}
             options={{
               headerRight: () => <PhotoHeaderWalker />,
               headerStyle: {
