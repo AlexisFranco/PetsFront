@@ -33,8 +33,8 @@ export default StyleSheet.create({
     paddingRight: 3,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 120,
+    height: 120,
     marginTop: 10,
     marginBottom: 15,
     borderRadius: 150,

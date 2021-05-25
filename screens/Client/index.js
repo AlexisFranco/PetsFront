@@ -19,17 +19,18 @@ function Client() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const { loading, pets, pet } = useSelector(
-    ({ usersReducer, petsReducer }) => ({
+  const { loading, pets, pet, services } = useSelector(
+    ({ usersReducer, petsReducer, servicesReducer }) => ({
       pets: petsReducer.pets,
       pet: petsReducer.pet,
+      services: servicesReducer.services,
       loading: usersReducer.loading,
     })
   );
 
   useEffect(() => {
     dispatch(getPets());
-  }, [pets.length, pet]);
+  }, [pets.length, pet, services.length]);
 
   if (loading) return <ActivityIndicator />;
   return (

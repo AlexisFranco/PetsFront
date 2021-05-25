@@ -1,26 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
-import {
-  SafeAreaView,
-  Text,
-  FlatList,
-  View,
-  Button,
-} from 'react-native';
+import { SafeAreaView, Text, FlatList, View, Button } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import {
   Fontisto,
   MaterialCommunityIcons,
   FontAwesome5,
-  Ionicons
+  Ionicons,
 } from '@expo/vector-icons';
+import { getMedicines } from '../../store/medicinesReducer';
 import styles from './styles';
 
 function InformationMedicine() {
   const route = useRoute();
-  const medicines = route.params.infoPet.medicineIDs;
   const idPet = route.params.infoPet._id;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const { medicines } = useSelector(({ medicinesReducer }) => ({
+      medicines: medicinesReducer.medicines,
+    })
+  );
+
+  useEffect(() => {
+    dispatch(getMedicines(`petID=${idPet}`));
+  }, [medicines.length]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,7 +34,7 @@ function InformationMedicine() {
         renderItem={({ item }) => (
           <View style={styles.infoMedicine}>
             <View style={styles.info}>
-              <Fontisto name="pills" size={24} color="#438E92" />
+              <Fontisto name="pills" size={45} color="#438E92" />
               <Text style={styles.textInfoMed}>{item.name}</Text>
             </View>
             <View style={styles.options}>
