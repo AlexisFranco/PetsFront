@@ -82,7 +82,15 @@ export default function App() {
             }}
           />
           <Stack.Screen name="Medicinas" component={InformationMedicine} />
-          <Stack.Screen name="Paseos" component={InformationWalks} />
+          <Stack.Screen
+            name="Paseos"
+            component={InformationWalks}
+            options={{
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
+            }}
+          />
           <Stack.Screen name="Paseadores" component={RequestWalker} />
           <Stack.Screen
             name="Información"
