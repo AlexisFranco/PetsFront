@@ -12,7 +12,7 @@ import ServicesWalker from './screens/ServicesWalker';
 import InformationPet from './screens/InformationPet';
 import InformationWalks from './screens/InformationWalks';
 import InformationClient from './screens/InformationClient';
-import InformationMedicine from './screens/informationMedicine';
+import InformationMedicine from './screens/InformationMedicine';
 import CreatePet from './screens/CreatePet';
 import CreateMedicine from './screens/createMedicine';
 import CreateService from './screens/createService';
@@ -81,7 +81,15 @@ export default function App() {
               },
             }}
           />
-          <Stack.Screen name="Medicinas" component={InformationMedicine} />
+          <Stack.Screen
+            name="Medicinas"
+            component={InformationMedicine}
+            options={{
+              headerStyle: {
+                backgroundColor: '#F3F2DC',
+              },
+            }}
+          />
           <Stack.Screen
             name="Paseos"
             component={InformationWalks}

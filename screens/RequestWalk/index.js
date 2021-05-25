@@ -25,7 +25,7 @@ function InformationWalker() {
   useEffect(() => {
     dispatch(getWalkers());
   }, []);
-  console.log(walkers)
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
